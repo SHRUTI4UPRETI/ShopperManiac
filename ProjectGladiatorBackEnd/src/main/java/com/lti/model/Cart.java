@@ -17,7 +17,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "tbl_cart1")
+@Table(name = "tbl_cart")
 public class Cart {
 	
 	@Id

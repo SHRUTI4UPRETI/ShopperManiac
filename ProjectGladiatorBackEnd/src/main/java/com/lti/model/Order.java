@@ -16,7 +16,7 @@ import javax.persistence.Table;
 import org.springframework.stereotype.Component;
 
 @Entity
-@Table(name = "tbl_order1")
+@Table(name = "tbl_order")
 public class Order {
 
 	@Id

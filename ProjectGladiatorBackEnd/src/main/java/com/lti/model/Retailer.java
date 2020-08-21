@@ -15,7 +15,7 @@ import javax.persistence.Table;
 import org.springframework.stereotype.Component;
 
 @Entity
-@Table(name = "tbl_retailer1")
+@Table(name = "tbl_retailer")
 public class Retailer {
 
 	@Id

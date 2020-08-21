@@ -16,7 +16,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="tbl_product1")
+@Table(name="tbl_product")
 public class Product {
 
 	@Id
