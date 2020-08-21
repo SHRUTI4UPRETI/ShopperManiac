@@ -20,7 +20,7 @@ public class CustomerController {
 	@Autowired
 	private CustomerService customerServ;
 
-	@PostMapping("/login")
+	@PostMapping("/customerLogin")
 	public loginStatus login(@RequestBody LoginDto loginDto) {
 		loginStatus loginStatus = new loginStatus();
 
