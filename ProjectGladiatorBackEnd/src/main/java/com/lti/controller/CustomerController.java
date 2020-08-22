@@ -9,9 +9,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.lti.dto.LoginDto;
 import com.lti.dto.Status.StatusType;
 import com.lti.dto.loginStatus;
+import com.lti.dto.RetailerStatus;
+import com.lti.exception.RetailerServiceException;
 import com.lti.model.Customer;
-import com.lti.repository.CustomerRepository;
+import com.lti.model.Retailer;
 import com.lti.service.CustomerService;
+import com.lti.service.RetailerService;
 
 @RestController
 @CrossOrigin
@@ -19,6 +22,9 @@ public class CustomerController {
 
 	@Autowired
 	private CustomerService customerServ;
+
+	@Autowired
+	private RetailerService retailerService;
 
 	@PostMapping("/customerLogin")
 	public loginStatus login(@RequestBody LoginDto loginDto) {
@@ -40,4 +46,5 @@ public class CustomerController {
 		}
 		return loginStatus;
 	}
+
 }
