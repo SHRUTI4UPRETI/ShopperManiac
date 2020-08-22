@@ -3,7 +3,8 @@ package com.lti.dto;
 public class loginStatus extends Status {
 	private int customerId;
 	private String name;
-
+	
+	
 	public int getCustomerId() {
 		return customerId;
 	}

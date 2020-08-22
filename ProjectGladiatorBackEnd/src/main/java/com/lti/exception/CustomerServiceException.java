@@ -1,31 +1,34 @@
 package com.lti.exception;
 
-public class CustomerServiceException extends Exception {
+public class CustomerServiceException extends RuntimeException {
 
 	public CustomerServiceException() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public CustomerServiceException(String arg0, Throwable arg1, boolean arg2, boolean arg3) {
-		super(arg0, arg1, arg2, arg3);
+	public CustomerServiceException(String message, Throwable cause, boolean enableSuppression,
+			boolean writableStackTrace) {
+		super(message, cause, enableSuppression, writableStackTrace);
 		// TODO Auto-generated constructor stub
 	}
 
-	public CustomerServiceException(String arg0, Throwable arg1) {
-		super(arg0, arg1);
+	public CustomerServiceException(String message, Throwable cause) {
+		super(message, cause);
 		// TODO Auto-generated constructor stub
 	}
 
-	public CustomerServiceException(String arg0) {
-		super(arg0);
+	public CustomerServiceException(String message) {
+		super(message);
 		// TODO Auto-generated constructor stub
 	}
 
-	public CustomerServiceException(Throwable arg0) {
-		super(arg0);
+	public CustomerServiceException(Throwable cause) {
+		super(cause);
 		// TODO Auto-generated constructor stub
 	}
+
+	
 	
 	
 	

@@ -1,12 +1,13 @@
 package com.lti.repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.Query;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import javax.transaction.Transactional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.lti.model.Cart;
@@ -20,12 +21,24 @@ public class CustomerRepoImpl implements CustomerRepository {
 	@PersistenceContext
 	EntityManager em;
 
-
 	@Override
-	public int addNewCustomer(Customer customer) {
-		// TODO Auto-generated method stub
-		return 0;
+	@Transactional
+	public void addNewCustomer(Customer customer) {
+		Customer customer1 = em.merge(customer);
+
+	      int uId = customer1.getCustomerId(); 
+	      List<Cart> carts = new ArrayList<Cart>();
+		  
+		  Cart cart = new Cart(); 
+		  cart.setCartQuantity(0); 
+		  cart.setCartStatus(true);
+			carts.add(cart);
+			addCart(carts, uId); 
+			/* return uId; */
+		 
 	}
+	
+	
 
 	@Override
 	public boolean updateCustomer(Customer customer) {
@@ -48,9 +61,17 @@ public class CustomerRepoImpl implements CustomerRepository {
 	}
 
 	@Override
-	public int addCart(List<Cart> carts, int customerId) {
-		// TODO Auto-generated method stub
-		return 0;
+	@Transactional
+	public void addCart(List<Cart> carts, int customerId) {
+		Customer customer = em.find(Customer.class, customerId);
+		customer.setCart(carts);
+
+		for (Cart c : carts) {
+			c.setCustomer(customer);
+		}
+
+		em.merge(customer);
+		
 	}
 
 	@Override
@@ -77,12 +98,16 @@ public class CustomerRepoImpl implements CustomerRepository {
 		return 0;
 	}
 
-	
-
 	@Override
 	public Customer findCustomerbyCustomerId(int customerId) {
-		Customer customer=em.find(Customer.class, customerId);
+		Customer customer = em.find(Customer.class, customerId);
 		return customer;
+	}
+
+	@Override
+	public boolean isCustomerPresent(String customerEmail) {
+		return (Long) em.createQuery("select count(c.customerId) from Customer c where c.customerEmail =: email")
+				.setParameter("email", customerEmail).getSingleResult() == 1 ? true : false;
 	}
 
 }

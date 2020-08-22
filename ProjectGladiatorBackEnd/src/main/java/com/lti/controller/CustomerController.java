@@ -7,11 +7,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lti.dto.LoginDto;
+import com.lti.dto.Status;
 import com.lti.dto.Status.StatusType;
 import com.lti.dto.loginStatus;
+import com.lti.exception.CustomerServiceException;
 import com.lti.model.Customer;
-import com.lti.repository.CustomerRepository;
 import com.lti.service.CustomerService;
+import com.lti.service.RetailerService;
 
 @RestController
 @CrossOrigin
@@ -19,6 +21,25 @@ public class CustomerController {
 
 	@Autowired
 	private CustomerService customerServ;
+	
+	@PostMapping("/customerRegister")
+	public Status register(@RequestBody Customer customer) {
+		Status status= new Status();
+		try {
+			customerServ.register(customer);
+			status.setStatus(StatusType.SUCCESS);
+			status.setMessage("Registration Successful");
+		}
+			catch (CustomerServiceException e) {
+				status.setStatus(StatusType.FAILURE);
+				status.setMessage(e.getMessage());
+			}
+		
+		return status;
+	}
+
+	@Autowired
+	private RetailerService retailerService;
 
 	@PostMapping("/customerLogin")
 	public loginStatus login(@RequestBody LoginDto loginDto) {
@@ -40,4 +61,5 @@ public class CustomerController {
 		}
 		return loginStatus;
 	}
+
 }

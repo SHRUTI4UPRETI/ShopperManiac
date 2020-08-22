@@ -3,6 +3,7 @@ package com.lti.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.lti.exception.CustomerServiceException;
 import com.lti.model.Customer;
 import com.lti.repository.CustomerRepository;
 
@@ -11,6 +12,14 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Autowired
 	private CustomerRepository customerRepo;
+	
+	@Override
+	public void register(Customer customer) {
+		if (!customerRepo.isCustomerPresent(customer.getCustomerEmail()))
+			customerRepo.addNewCustomer(customer);
+		else
+			throw new CustomerServiceException("Customer Already Registered");
+	}
 
 	@Override
 	public Customer loginCustomer(String customerEmail, String customerPassword) {
