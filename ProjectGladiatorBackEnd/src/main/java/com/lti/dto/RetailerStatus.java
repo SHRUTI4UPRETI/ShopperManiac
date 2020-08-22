@@ -1,6 +1,6 @@
 package com.lti.dto;
 
-public class RegisterStatus extends Status {
+public class RetailerStatus extends Status {
 	private int retailerId;
 	private String retailerName;
 	public int getRetailerId() {

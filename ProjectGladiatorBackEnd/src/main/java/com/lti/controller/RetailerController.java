@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.lti.dto.RegisterStatus;
+import com.lti.dto.RetailerStatus;
 import com.lti.dto.Status;
 import com.lti.dto.Status.StatusType;
 
