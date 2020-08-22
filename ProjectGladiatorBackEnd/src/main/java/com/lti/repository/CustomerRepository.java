@@ -9,13 +9,13 @@ import com.lti.model.Order;
 
 public interface CustomerRepository {
 
-	public int addNewCustomer(Customer customer);
+	public void addNewCustomer(Customer customer);
 
 	boolean updateCustomer(Customer customer);
 		
 	int isValidCustomer(String customerEmail, String customerPassword);
 
-	public int addCart(List<Cart> carts, int customerId);
+	public void addCart(List<Cart> carts, int customerId);
 	
 	public Customer findCustomerbyCustomerId(int customerId);
 
@@ -26,5 +26,7 @@ public interface CustomerRepository {
 	public List<Items> displayProductByOrderId(int orderId);
 
 	public int changeItemQuantity(int itemQuantity, int productId, int customerId);
+
+	boolean isCustomerPresent(String customerEmail);
 	
 }

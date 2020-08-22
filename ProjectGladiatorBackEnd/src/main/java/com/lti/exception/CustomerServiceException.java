@@ -1,6 +1,6 @@
 package com.lti.exception;
 
-public class CustomerServiceException extends Exception {
+public class CustomerServiceException extends RuntimeException {
 
 	public CustomerServiceException() {
 		super();
