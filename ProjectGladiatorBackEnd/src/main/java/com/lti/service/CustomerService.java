@@ -7,4 +7,6 @@ public interface CustomerService {
 
 	Customer loginCustomer(String email, String password);
 
+	void register(Customer customer);
+
 }
