@@ -1,11 +1,9 @@
 package com.lti.dto;
 
 public class RetailerStatus extends Status {
-	
+
 	private int retailerId;
 	private String retailerName;
-	
-	
 
 	public int getRetailerId() {
 		return retailerId;

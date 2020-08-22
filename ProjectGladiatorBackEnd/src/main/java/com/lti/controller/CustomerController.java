@@ -9,10 +9,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.lti.dto.LoginDto;
 import com.lti.dto.Status.StatusType;
 import com.lti.dto.loginStatus;
-import com.lti.dto.RetailerStatus;
-import com.lti.exception.RetailerServiceException;
+import com.lti.exception.CustomerServiceException;
 import com.lti.model.Customer;
-import com.lti.model.Retailer;
 import com.lti.service.CustomerService;
 import com.lti.service.RetailerService;
 
@@ -22,6 +20,22 @@ public class CustomerController {
 
 	@Autowired
 	private CustomerService customerServ;
+	
+	@PostMapping("/register")
+	public loginStatus register(@RequestBody Customer customer) {
+		loginStatus status= new loginStatus();
+		try {
+			customerServ.register(customer);
+			status.setStatus(StatusType.SUCCESS);
+			status.setMessage("Registration Successful");
+		}
+			catch (CustomerServiceException e) {
+				status.setStatus(StatusType.FAILURE);
+				status.setMessage(e.getMessage());
+			}
+		
+		return status;
+	}
 
 	@Autowired
 	private RetailerService retailerService;

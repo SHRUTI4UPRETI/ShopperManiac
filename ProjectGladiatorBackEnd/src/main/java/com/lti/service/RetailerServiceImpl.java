@@ -1,6 +1,7 @@
 package com.lti.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
@@ -12,21 +13,30 @@ import com.lti.repository.RetailerRepository;
 public class RetailerServiceImpl implements RetailerService {
 
 	@Autowired
-	RetailerRepository retailerRepository;
+	private RetailerRepository retailerRepo;
+
+	@Override
+	public void register(Retailer retailer) {
+		if (!retailerRepo.isRetailerPresent(retailer.getRetailerEmail()))
+			retailerRepo.addNewRetailer(retailer);
+		else
+			throw new RetailerServiceException("Retailer Already Registered");
+
+	}
 
 	@Override
 	public Retailer loginRetailer(String retailerEmail, String retailerPassword) {
 		try {
-			if (!retailerRepository.isRetailerPresent(retailerEmail)) {
+			if (!retailerRepo.isRetailerPresent(retailerEmail)) {
 				throw new RetailerServiceException("Your Email is not registered with us please register");
 			}
 
-			int retailerId = retailerRepository.findRetailerbyEmailPassword(retailerEmail, retailerPassword);
-			Retailer retailer = retailerRepository.findRetailerById(retailerId);
+			int retailerId = retailerRepo.findRetailerbyEmailPassword(retailerEmail, retailerPassword);
+			Retailer retailer = retailerRepo.findRetailerById(retailerId);
 			return retailer;
 		} catch (EmptyResultDataAccessException e) {
 			throw new RetailerServiceException("Invaild Credendials");
 		}
-	}
 
+	}
 }

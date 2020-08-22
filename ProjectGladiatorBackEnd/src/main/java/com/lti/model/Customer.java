@@ -33,7 +33,7 @@ public class Customer {
 	private String customerAddress;
 	
 	@Column
-	private int customerMobile;
+	private String customerMobile;
 	
 	@OneToMany(mappedBy="customer", cascade=CascadeType.ALL)
 	private List<Cart> cart;
@@ -78,12 +78,14 @@ public class Customer {
 		this.customerAddress = customerAddress;
 	}
 
-	public int getCustomerMobile() {
+	
+
+	public String getCustomerMobile() {
 		return customerMobile;
 	}
 
-	public void setCustomerMobile(int i) {
-		this.customerMobile = i;
+	public void setCustomerMobile(String customerMobile) {
+		this.customerMobile = customerMobile;
 	}
 
 	public List<Cart> getCart() {

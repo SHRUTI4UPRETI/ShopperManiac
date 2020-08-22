@@ -1,6 +1,11 @@
 package com.lti.exception;
 
-public class RetailerServiceException extends RuntimeException {
+
+public class RetailerServiceException extends RuntimeException{
+
+	public RetailerServiceException(String message) {
+		super(message);
+	}
 
 	public RetailerServiceException() {
 		super();
@@ -18,16 +23,10 @@ public class RetailerServiceException extends RuntimeException {
 		// TODO Auto-generated constructor stub
 	}
 
-	public RetailerServiceException(String message) {
-		super(message);
-		// TODO Auto-generated constructor stub
-	}
-
 	public RetailerServiceException(Throwable cause) {
 		super(cause);
 		// TODO Auto-generated constructor stub
 	}
-	
 	
 
 }
