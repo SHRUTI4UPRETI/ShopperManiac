@@ -11,4 +11,7 @@ public interface ProductService {
 
 	List<Product> viewAllProducts();
 
+	Product viewSpecificProduct(int productId);
+	
+	List<Product> viewProductByCategory(String productCategory);
 }

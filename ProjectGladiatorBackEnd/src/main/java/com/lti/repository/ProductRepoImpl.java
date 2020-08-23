@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 import org.springframework.stereotype.Repository;
 
@@ -35,6 +36,23 @@ public class ProductRepoImpl implements ProductRepo {
 
 		List<Product> products = qry.getResultList();
 
+		return products;
+	}
+
+	@Override
+	public Product viewSpecificProduct(int productId) {
+		Product product=em.find(Product.class, productId);
+		return product;
+	}
+
+	@Override
+	public List<Product> viewProductByCategory(String productCategory) {
+		String sql="select product from Product product where product.productCategory=:ct";
+		TypedQuery<Product> qry=em.createQuery(sql,Product.class);
+		qry.setParameter("ct", productCategory);
+		
+		List<Product> products=qry.getResultList();
+		
 		return products;
 	}
 

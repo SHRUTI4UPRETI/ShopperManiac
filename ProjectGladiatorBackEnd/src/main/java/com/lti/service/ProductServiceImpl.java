@@ -17,26 +17,46 @@ public class ProductServiceImpl implements ProductService {
 
 	@Autowired
 	ProductRepo productRepo;
-	
+
 	@Override
-	public List<Product> latestFiveProducts(){
-		
+	public List<Product> latestFiveProducts() {
+
 		List<Product> products = new ArrayList<>();
 		products = productRepo.latestFiveProducts();
-		for(Product p: products) {
-			String imageName=p.getProductImagePath();
-			imageName="assets/"+imageName+".jpg";
+		for (Product p : products) {
+			String imageName = p.getProductImagePath();
+			imageName = "assets/" + imageName + ".jpg";
 			p.setProductImagePath(imageName);
 		}
-		
+
 		return products;
-		
+
 	}
-	
+
 	@Override
-	public List<Product> viewAllProducts(){
-		
+	public List<Product> viewAllProducts() {
+
 		return productRepo.viewAllProducts();
-		
+
+	}
+
+	@Override
+	public Product viewSpecificProduct(int productId) {
+		return productRepo.viewSpecificProduct(productId);
+
+	}
+
+	@Override
+	public List<Product> viewProductByCategory(String productCategory) {
+
+		List<Product> products = new ArrayList<>();
+		products = productRepo.viewProductByCategory(productCategory);
+		for (Product p : products) {
+			String imageName = p.getProductImagePath();
+			imageName = "assets/" + imageName + ".jpg";
+			p.setProductImagePath(imageName);
+		}
+
+		return products;
 	}
 }

@@ -1,11 +1,9 @@
 package com.lti.dto;
 
-
 public class ProductDto {
 
+	private int productId;
 	/*
-	 * private int productId;
-	 * 
 	 * private String productName;
 	 * 
 	 * private String productBrandName;
@@ -25,13 +23,17 @@ public class ProductDto {
 	 * private Boolean isProductApproved;
 	 */
 	private String productImagePath;
-	/*
-	 * public int getProductId() { return productId; }
-	 * 
-	 * public void setProductId(int productId) { this.productId = productId; }
-	 */
 
 	private String productName;
+
+	public int getProductId() {
+		return productId;
+	}
+
+	public void setProductId(int productId) {
+		this.productId = productId;
+	}
+
 	public String getProductName() {
 		return productName;
 	}
@@ -85,6 +87,5 @@ public class ProductDto {
 	 * public void setIsProductApproved(Boolean isProductApproved) {
 	 * this.isProductApproved = isProductApproved; }
 	 */
-	
-	
+
 }

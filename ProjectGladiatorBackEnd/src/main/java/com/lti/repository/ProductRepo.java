@@ -10,5 +10,9 @@ public interface ProductRepo {
 	List<Product> latestFiveProducts();
 
 	List<Product> viewAllProducts();
+	
+	Product viewSpecificProduct(int productId);
+	
+	List<Product> viewProductByCategory(String productCategory);
 
 }
