@@ -29,6 +29,8 @@ public interface CustomerRepository {
 
 	boolean isCustomerPresent(String customerEmail);
 	
+	public int changeQuantityInCart(int customerId, int itemId, int itemQuantity);
+	
 	
 	
 }

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.lti.dto.ChangeCartQuantityDto;
 import com.lti.dto.ItemDto;
 import com.lti.dto.LoginDto;
 import com.lti.dto.Status;
@@ -19,6 +20,8 @@ import com.lti.model.Customer;
 import com.lti.model.Items;
 import com.lti.service.CustomerService;
 import com.lti.service.RetailerService;
+
+import ch.qos.logback.core.net.SyslogOutputStream;
 
 @RestController
 @CrossOrigin
@@ -81,6 +84,22 @@ public class CustomerController {
 
 		return status;
 
+	}
+	
+	@PostMapping("/changeItemQuantity")
+	public Status changeQuantityInCart(@RequestBody ChangeCartQuantityDto changeCartQuantityDto) {
+		Status status = new Status();
+		int i = customerServ.changeQuantityInCart(changeCartQuantityDto.getCustomerId(), changeCartQuantityDto.getItemId(), changeCartQuantityDto.getItemQuantity());
+		if (i > 0) {
+			status.setMessage("Revised Quantity");
+			status.setStatus(StatusType.SUCCESS);
+		}
+		else {
+			status.setMessage(" not Revised Quantity");
+			status.setStatus(StatusType.FAILURE);
+		}
+		System.out.println(i);
+		return status;
 	}
 
 }

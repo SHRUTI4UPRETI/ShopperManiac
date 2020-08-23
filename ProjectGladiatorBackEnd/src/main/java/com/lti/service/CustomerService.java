@@ -13,5 +13,6 @@ public interface CustomerService {
 	void register(Customer customer);
 	
 	public int addItem(List<Items> items, int customerId, int productId);
+	public int changeQuantityInCart(int customerId, int itemId, int itemQuantity);
 
 }

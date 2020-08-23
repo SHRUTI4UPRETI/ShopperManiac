@@ -41,5 +41,11 @@ public class CustomerServiceImpl implements CustomerService {
 	public int addItem(List<Items> items, int customerId, int productId) {
 		return customerRepo.addItem(items, customerId, productId);
 	}
+	
+	@Override
+	public int changeQuantityInCart(int customerId, int itemId, int itemQuantity) {
+		//System.out.println("hello");
+		return customerRepo.changeQuantityInCart( customerId, itemId,itemQuantity);
+	}
 
 }
