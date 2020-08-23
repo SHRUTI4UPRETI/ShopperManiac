@@ -1,10 +1,13 @@
 package com.lti.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.lti.exception.CustomerServiceException;
 import com.lti.model.Customer;
+import com.lti.model.Items;
 import com.lti.repository.CustomerRepository;
 
 @Service
@@ -32,6 +35,11 @@ public class CustomerServiceImpl implements CustomerService {
 		}
 		return null;
 
+	}
+
+	@Override
+	public int addItem(List<Items> items, int customerId, int productId) {
+		return customerRepo.addItem(items, customerId, productId);
 	}
 
 }

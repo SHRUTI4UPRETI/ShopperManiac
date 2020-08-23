@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Repository;
@@ -14,6 +15,7 @@ import com.lti.model.Cart;
 import com.lti.model.Customer;
 import com.lti.model.Items;
 import com.lti.model.Order;
+import com.lti.model.Product;
 
 @Repository
 public class CustomerRepoImpl implements CustomerRepository {
@@ -75,9 +77,38 @@ public class CustomerRepoImpl implements CustomerRepository {
 	}
 
 	@Override
+	@Transactional
 	public int addItem(List<Items> items, int customerId, int productId) {
-		// TODO Auto-generated method stub
-		return 0;
+
+		String sql = "select c from Cart c where c.cartStatus=:status and c.customer.customerId=:custId";
+
+		TypedQuery<Cart> query = em.createQuery(sql, Cart.class);
+		query.setParameter("custId", customerId);
+		query.setParameter("status", true);
+
+		List<Cart> carts = query.getResultList();
+
+		Cart cart = carts.get(0);
+
+		// Cart cart = em.find(Cart.class, cartId);
+		Items item = items.get(0);
+
+		Product product = em.find(Product.class, productId);
+		// System.out.println(product.getProductId());
+
+		item.setItemName(product.getProductName());
+		item.setItemPrice(product.getProductPrice());
+		item.setItemImagePath(product.getProductImagePath());
+		item.setItemTotalPrice(product.getProductPrice() * item.getItemQuantity());
+
+		item.setProduct(product);
+
+		item.setCart(cart);
+
+		cart.setCartQuantity(cart.getCartQuantity() + item.getItemQuantity());
+		cart.setItem(items);
+		em.merge(cart);
+		return 1;
 	}
 
 	@Override

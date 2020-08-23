@@ -19,32 +19,39 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 @Entity
 @Table(name = "tbl_item")
 public class Items {
-	
+
 	@Id
 	@SequenceGenerator(name = "seq_item1", initialValue = 30001, allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_item1")
 	private int itemId;
-	
+
 	@Column
 	private int itemQuantity;
 	@Column
 	private int itemTotalPrice;
 	@Column
 	private String itemName;
-	@Column 
+	@Column
 	private int itemPrice;
+	@Column
+	private String itemImagePath;
 
-	
+	public String getItemImagePath() {
+		return itemImagePath;
+	}
+
+	public void setItemImagePath(String itemImagePath) {
+		this.itemImagePath = itemImagePath;
+	}
+
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="productId")
+	@JoinColumn(name = "productId")
 	private Product product;
-	
-	
+
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="cartId")
+	@JoinColumn(name = "cartId")
 	private Cart cart;
 
-	
 	public String getItemName() {
 		return itemName;
 	}
@@ -101,13 +108,10 @@ public class Items {
 		this.cart = cart;
 	}
 
-	@Override
-	public String toString() {
-		return "Items [itemId=" + itemId + ", itemQuantity=" + itemQuantity + ", itemTotalPrice=" + itemTotalPrice
-				+ ", itemName=" + itemName + ", itemPrice=" + itemPrice + "]";
-	}
-	
-	
-	
+	/*
+	 * @Override public String toString() { return "Items [itemId=" + itemId +
+	 * ", itemQuantity=" + itemQuantity + ", itemTotalPrice=" + itemTotalPrice +
+	 * ", itemName=" + itemName + ", itemPrice=" + itemPrice + "]"; }
+	 */
 
 }
