@@ -14,6 +14,8 @@ import javax.persistence.Table;
 
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 @Table(name = "tbl_retailer")
 public class Retailer {
@@ -35,6 +37,7 @@ public class Retailer {
 	@Column
 	private int retailerMobile;
 
+	
 	@OneToMany(mappedBy = "retailer", cascade = CascadeType.ALL)
 	private List<Product> products;
 

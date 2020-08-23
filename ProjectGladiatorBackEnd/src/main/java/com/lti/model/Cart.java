@@ -16,6 +16,9 @@ import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 @Table(name = "tbl_cart")
 public class Cart {
@@ -31,9 +34,11 @@ public class Cart {
 	@Column
 	private boolean cartStatus;
 	
+	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="customerId")
 	private Customer customer;
+	
 	
 	@OneToMany(mappedBy="cart", cascade=CascadeType.ALL,fetch = FetchType.LAZY)
 	private List<Items> item;

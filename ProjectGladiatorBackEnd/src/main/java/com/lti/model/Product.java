@@ -15,6 +15,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 @Table(name="tbl_product")
 public class Product {
@@ -43,9 +46,11 @@ public class Product {
 	@Column
 	private Boolean isProductApproved;
 	
+	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="retailerId")
 	private Retailer retailer;
+	
 	
 	@OneToMany(mappedBy="product", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	private List<Items> item;

@@ -14,6 +14,8 @@ import javax.persistence.Table;
 
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 @Table(name = "tbl_item")
 public class Items {
@@ -32,9 +34,11 @@ public class Items {
 	@Column 
 	private int itemPrice;
 
+	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="productId")
 	private Product product;
+	
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="cartId")

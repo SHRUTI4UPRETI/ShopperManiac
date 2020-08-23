@@ -7,7 +7,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 class ProjectGladiatorBackEndApplicationTests {
 
 	@Test
-	void contextLoads() {
+	void viewProducts() {
+		
+		
 	}
 
 }
