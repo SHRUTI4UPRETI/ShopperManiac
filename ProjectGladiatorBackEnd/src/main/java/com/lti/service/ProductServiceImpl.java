@@ -63,4 +63,9 @@ public class ProductServiceImpl implements ProductService {
 
 		return products;
 	}
+
+	@Override
+	public int checkStockQuantity(int itemId) {
+		return productRepo.checkStockQuantity(itemId);
+	}
 }
