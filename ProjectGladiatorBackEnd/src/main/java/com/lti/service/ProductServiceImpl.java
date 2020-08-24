@@ -42,7 +42,11 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public Product viewSpecificProduct(int productId) {
-		return productRepo.viewSpecificProduct(productId);
+		Product p=productRepo.viewSpecificProduct(productId);
+		String imageName = p.getProductImagePath();
+		imageName = "assets/" + imageName + ".jpg";
+		p.setProductImagePath(imageName);
+		return p;
 
 	}
 
