@@ -35,6 +35,18 @@ public class Items {
 	private int itemPrice;
 	@Column
 	private String itemImagePath;
+	@Column
+	private int itemStock;
+	
+	
+
+	public int getItemStock() {
+		return itemStock;
+	}
+
+	public void setItemStock(int itemStock) {
+		this.itemStock = itemStock;
+	}
 
 	public String getItemImagePath() {
 		return itemImagePath;

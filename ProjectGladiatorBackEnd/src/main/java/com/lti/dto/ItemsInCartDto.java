@@ -12,6 +12,18 @@ public class ItemsInCartDto {
 	private int itemPrice;
 
 	private String itemImagePath;
+	
+	private int itemStock;
+	
+	
+
+	public int getItemStock() {
+		return itemStock;
+	}
+
+	public void setItemStock(int itemStock) {
+		this.itemStock = itemStock;
+	}
 
 	public int getItemId() {
 		return itemId;

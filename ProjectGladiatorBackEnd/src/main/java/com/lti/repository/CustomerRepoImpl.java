@@ -97,6 +97,7 @@ public class CustomerRepoImpl implements CustomerRepository {
 		item.setItemName(product.getProductName());
 		item.setItemPrice(product.getProductPrice());
 		item.setItemImagePath(product.getProductImagePath());
+		item.setItemStock(product.getProductQuantity());
 		item.setItemTotalPrice(product.getProductPrice() * item.getItemQuantity());
 
 		item.setProduct(product);

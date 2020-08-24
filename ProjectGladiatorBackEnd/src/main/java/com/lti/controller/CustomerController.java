@@ -148,6 +148,7 @@ public class CustomerController {
 			ItemsInCartDto returnItem = new ItemsInCartDto();
 			returnItem.setItemId(i.getItemId());
 			returnItem.setItemName(i.getItemName());
+			returnItem.setItemStock(i.getItemStock());
 			returnItem.setItemPrice(i.getItemPrice());
 			returnItem.setItemQuantity(i.getItemQuantity());
 			returnItem.setItemImagePath(i.getItemImagePath());
