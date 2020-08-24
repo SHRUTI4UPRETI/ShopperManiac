@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.lti.dto.ItemIdDto;
+import com.lti.dto.ItemQuantityDto;
 import com.lti.dto.ProductCategoryDto;
 import com.lti.dto.ProductDto;
 import com.lti.dto.ProductIdDto;
@@ -84,6 +86,16 @@ public class ProductController {
 		}
 
 		return Specificproducts;
+	}
+
+	@PostMapping("/checkStock")
+	public ItemQuantityDto checkStock(@RequestBody ItemIdDto itemId) {
+		
+		ItemQuantityDto stockQuantity = new ItemQuantityDto();
+		
+		stockQuantity.setItemQuantity(productServ.checkStockQuantity(itemId.getItemId()));
+		
+		return stockQuantity;
 	}
 
 }

@@ -1,5 +1,6 @@
 package com.lti.controller;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,13 +14,18 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.lti.dto.ChangeCartQuantityDto;
 import com.lti.dto.ItemDto;
+import com.lti.dto.ItemsInCartDto;
 import com.lti.dto.LoginDto;
+import com.lti.dto.PlaceOrderDto;
+import com.lti.dto.SpecificProductDto;
 import com.lti.dto.Status;
 import com.lti.dto.Status.StatusType;
 import com.lti.dto.loginStatus;
 import com.lti.exception.CustomerServiceException;
 import com.lti.model.Customer;
 import com.lti.model.Items;
+import com.lti.model.Order;
+import com.lti.model.Product;
 import com.lti.service.CustomerService;
 import com.lti.service.RetailerService;
 
@@ -99,21 +105,58 @@ public class CustomerController {
 		return status;
 
 	}
-	
+
 	@PostMapping("/changeItemQuantity")
 	public Status changeQuantityInCart(@RequestBody ChangeCartQuantityDto changeCartQuantityDto) {
 		Status status = new Status();
-		int i = customerServ.changeQuantityInCart(changeCartQuantityDto.getCustomerId(), changeCartQuantityDto.getItemId(), changeCartQuantityDto.getItemQuantity());
+		int i = customerServ.changeQuantityInCart(changeCartQuantityDto.getCustomerId(),
+				changeCartQuantityDto.getItemId(), changeCartQuantityDto.getItemQuantity());
 		if (i > 0) {
 			status.setMessage("Revised Quantity");
 			status.setStatus(StatusType.SUCCESS);
-		}
-		else {
+		} else {
 			status.setMessage(" not Revised Quantity");
 			status.setStatus(StatusType.FAILURE);
 		}
 		System.out.println(i);
 		return status;
+	}
+
+	@PostMapping("/placeCustomerOrder")
+	public Status placeCustomerOrder(@RequestBody PlaceOrderDto placeOrder) {
+		Status status = new Status();
+		Order order = new Order();
+		order.setOrderDate(LocalDate.now());
+		int i = customerServ.placeOrderforCustomer(order, placeOrder.getCustomerId());
+		if (i > 0) {
+			status.setMessage("Order Placed");
+			status.setStatus(StatusType.SUCCESS);
+		} else {
+			status.setMessage("Order Not placed");
+			status.setStatus(StatusType.FAILURE);
+		}
+		return status;
+	}
+
+	@PostMapping("/viewItemsInCart")
+	public List<ItemsInCartDto> viewItemsInCart(@RequestBody PlaceOrderDto customerId) {
+		List<Items> items = customerServ.viewItemsInCart(customerId.getCustomerId());
+
+		List<ItemsInCartDto> returnItems = new ArrayList<>();
+
+		for (Items i : items) {
+			ItemsInCartDto returnItem = new ItemsInCartDto();
+			returnItem.setItemId(i.getItemId());
+			returnItem.setItemName(i.getItemName());
+			returnItem.setItemPrice(i.getItemPrice());
+			returnItem.setItemQuantity(i.getItemQuantity());
+			returnItem.setItemImagePath(i.getItemImagePath());
+			returnItem.setItemTotalPrice(i.getItemTotalPrice());
+
+			returnItems.add(returnItem);
+		}
+
+		return returnItems;
 	}
 
 }

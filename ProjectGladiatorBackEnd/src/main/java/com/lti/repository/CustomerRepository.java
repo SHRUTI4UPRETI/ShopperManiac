@@ -15,7 +15,7 @@ public interface CustomerRepository {
 		
 	int isValidCustomer(String customerEmail, String customerPassword);
 
-	public void addCart(List<Cart> carts, int customerId);
+	public int addCart(List<Cart> carts, int customerId);
 	
 	public Customer findCustomerbyCustomerId(int customerId);
 
@@ -31,6 +31,6 @@ public interface CustomerRepository {
 	
 	public int changeQuantityInCart(int customerId, int itemId, int itemQuantity);
 	
-	
+	public List<Items> viewItemsInCart(int customerId);
 	
 }

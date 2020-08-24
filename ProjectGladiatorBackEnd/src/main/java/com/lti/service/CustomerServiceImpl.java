@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import com.lti.exception.CustomerServiceException;
 import com.lti.model.Customer;
 import com.lti.model.Items;
+import com.lti.model.Order;
+import com.lti.model.Product;
 import com.lti.repository.CustomerRepository;
 
 @Service
@@ -59,6 +61,23 @@ public class CustomerServiceImpl implements CustomerService {
 	public int changeQuantityInCart(int customerId, int itemId, int itemQuantity) {
 		//System.out.println("hello");
 		return customerRepo.changeQuantityInCart( customerId, itemId,itemQuantity);
+	}
+	
+	@Override
+	public int placeOrderforCustomer(Order order, int customerId) {
+		return customerRepo.placeOrderforCustomer(order, customerId);
+	}
+
+	@Override
+	public List<Items> viewItemsInCart(int customerId) {
+		 List<Items> items=customerRepo.viewItemsInCart(customerId);
+		 
+		for (Items i : items) {
+			String imageName = i.getItemImagePath();
+			imageName = "assets/" + imageName + ".jpg";
+			i.setItemImagePath(imageName);
+		}
+		return items;
 	}
 
 }

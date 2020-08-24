@@ -14,4 +14,6 @@ public interface ProductService {
 	Product viewSpecificProduct(int productId);
 	
 	List<Product> viewProductByCategory(String productCategory);
+	
+	public int checkStockQuantity(int itemId);
 }
