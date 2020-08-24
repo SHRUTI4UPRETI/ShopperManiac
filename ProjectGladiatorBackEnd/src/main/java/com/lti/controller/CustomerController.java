@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailSender;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,6 +29,9 @@ import ch.qos.logback.core.net.SyslogOutputStream;
 @CrossOrigin
 public class CustomerController {
 
+	  @Autowired
+	  private MailSender mailSender;
+	
 	@Autowired
 	private CustomerService customerServ;
 
@@ -37,6 +42,15 @@ public class CustomerController {
 			customerServ.register(customer);
 			status.setStatus(StatusType.SUCCESS);
 			status.setMessage("Registration Successful");
+			
+
+			SimpleMailMessage message = new SimpleMailMessage();
+			message.setFrom("ShoppingManiac4@outlook.com");
+			message.setTo(customer.getCustomerEmail());       /* retailer.getRetailerEmail() */ 
+			message.setSubject("Thank You for registration");
+			message.setText("Thank you "+customer.getCustomerName()+" for registration /n Have a nice Day :)");
+			mailSender.send(message);
+			
 		} catch (CustomerServiceException e) {
 			status.setStatus(StatusType.FAILURE);
 			status.setMessage(e.getMessage());

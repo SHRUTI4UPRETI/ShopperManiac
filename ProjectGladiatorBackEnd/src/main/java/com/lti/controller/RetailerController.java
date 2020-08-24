@@ -1,10 +1,14 @@
 package com.lti.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailSender;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.mail.MailException;
+
 
 import com.lti.dto.LoginDto;
 import com.lti.dto.RetailerStatus;
@@ -17,7 +21,10 @@ import com.lti.service.RetailerService;
 @RestController
 @CrossOrigin
 public class RetailerController {
-
+	 
+	  @Autowired
+	  private MailSender mailSender;
+	
 	@Autowired
 	private RetailerService retailerService;
 	
@@ -28,6 +35,13 @@ public class RetailerController {
 			retailerService.register(retailer);
 			status.setStatus(StatusType.SUCCESS);
 			status.setMessage("Registration Successful");
+
+			SimpleMailMessage message = new SimpleMailMessage();
+			message.setFrom("ShoppingManiac4@outlook.com");
+			message.setTo(retailer.getRetailerEmail());       /* retailer.getRetailerEmail() */ 
+			message.setSubject("Thank You for registration");
+			message.setText("Your UserName is: "+retailer.getRetailerEmail()+"and your Password is: "+retailer.getRetailerPassword()+"Thankyou");
+			mailSender.send(message);
 		}catch (RetailerServiceException e) {
 			status.setStatus(StatusType.FAILURE);
 			status.setMessage(e.getMessage());
