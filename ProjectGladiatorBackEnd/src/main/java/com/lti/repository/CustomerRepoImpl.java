@@ -64,7 +64,7 @@ public class CustomerRepoImpl implements CustomerRepository {
 
 	@Override
 	@Transactional
-	public void addCart(List<Cart> carts, int customerId) {
+	public int addCart(List<Cart> carts, int customerId) {
 		Customer customer = em.find(Customer.class, customerId);
 		customer.setCart(carts);
 
@@ -73,7 +73,7 @@ public class CustomerRepoImpl implements CustomerRepository {
 		}
 
 		em.merge(customer);
-		
+		return 1;
 	}
 
 	@Override
@@ -110,11 +110,72 @@ public class CustomerRepoImpl implements CustomerRepository {
 		em.merge(cart);
 		return 1;
 	}
+	
+	@Transactional
+	public int setCartStatusInactive(int cartId) {
+		Cart cart = em.find(Cart.class, cartId);
+
+		cart.setCartStatus(false);
+		em.merge(cart);
+
+		return 1;
+	}
 
 	@Override
+	@Transactional
 	public int placeOrderforCustomer(Order order, int customerId) {
-		// TODO Auto-generated method stub
-		return 0;
+		String sql1 = "select c from Cart c where c.cartStatus=:status and c.customer.customerId=:custId";
+
+		TypedQuery<Cart> query = em.createQuery(sql1, Cart.class);
+		query.setParameter("custId", customerId);
+		query.setParameter("status", true);
+
+		List<Cart> carts1 = query.getResultList();
+
+		Cart cart = carts1.get(0);
+		int cartId = cart.getCartId();
+
+		String sql = "select it from Items it where it.cart.cartId=:cartId";
+
+		Query qry = em.createQuery(sql);
+		qry.setParameter("cartId", cartId);
+
+		List<Items> items = qry.getResultList();
+
+		order.setOrderTotalPrice(0);
+
+		for (Items i : items) {
+			order.setOrderTotalPrice(order.getOrderTotalPrice() + i.getItemTotalPrice());
+			int productId = i.getProduct().getProductId();
+			Product product = em.find(Product.class, productId);
+			int qty = product.getProductQuantity();
+			System.out.println(qty);
+			System.out.println(i.getItemQuantity());
+			product.setProductQuantity(qty - i.getItemQuantity());
+			em.merge(product);
+		}
+
+		int cid = cart.getCustomer().getCustomerId();
+		// cart.setOrder(order);
+		order.setCart(cart);
+		Order od = em.merge(order);
+
+		int status = setCartStatusInactive(cartId);
+		if (status > 0)
+			System.out.println("Cart status set inactive");
+
+		List<Cart> carts = new ArrayList<Cart>();
+
+		Cart cartNew = new Cart();
+		cartNew.setCartQuantity(0);
+		cartNew.setCartStatus(true);
+		carts.add(cartNew);
+		int newCart = addCart(carts, cid);
+
+		if (newCart > 0)
+			System.out.println("New Active cart created");
+
+		return od.getOrderId();
 	}
 
 	@Override

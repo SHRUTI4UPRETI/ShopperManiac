@@ -1,5 +1,6 @@
 package com.lti.controller;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,12 +13,14 @@ import org.springframework.web.bind.annotation.RestController;
 import com.lti.dto.ChangeCartQuantityDto;
 import com.lti.dto.ItemDto;
 import com.lti.dto.LoginDto;
+import com.lti.dto.PlaceOrderDto;
 import com.lti.dto.Status;
 import com.lti.dto.Status.StatusType;
 import com.lti.dto.loginStatus;
 import com.lti.exception.CustomerServiceException;
 import com.lti.model.Customer;
 import com.lti.model.Items;
+import com.lti.model.Order;
 import com.lti.service.CustomerService;
 import com.lti.service.RetailerService;
 
@@ -102,4 +105,20 @@ public class CustomerController {
 		return status;
 	}
 
+	@PostMapping("/placeCustomerOrder")
+	public Status placeCustomerOrder(@RequestBody PlaceOrderDto placeOrder) {
+		Status status = new Status();
+		Order order = new Order();
+		order.setOrderDate(LocalDate.now());
+		int i = customerServ.placeOrderforCustomer(order, placeOrder.getCustomerId());
+		if (i > 0) {
+			status.setMessage("Order Placed");
+			status.setStatus(StatusType.SUCCESS);
+		}
+		else {
+			status.setMessage("Order Not placed");
+			status.setStatus(StatusType.FAILURE);
+		}
+		return status;
+	}
 }
