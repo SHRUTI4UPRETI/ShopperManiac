@@ -1,5 +1,6 @@
 package com.lti.service;
 
+import java.util.Base64;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +19,13 @@ public class CustomerServiceImpl implements CustomerService {
 	
 	@Override
 	public void register(Customer customer) {
-		if (!customerRepo.isCustomerPresent(customer.getCustomerEmail()))
+		if (!customerRepo.isCustomerPresent(customer.getCustomerEmail())) {
+			String pass = customer.getCustomerPassword();
+			String encodedPassword = Base64.getEncoder().encodeToString(pass.getBytes()); 
+			customer.setCustomerPassword(encodedPassword);
 			customerRepo.addNewCustomer(customer);
+		}
+			
 		else
 			throw new CustomerServiceException("Customer Already Registered");
 	}
@@ -27,8 +33,15 @@ public class CustomerServiceImpl implements CustomerService {
 	@Override
 	public Customer loginCustomer(String customerEmail, String customerPassword) {
 
-		int customerId = customerRepo.isValidCustomer(customerEmail, customerPassword);
-
+		System.out.println(customerPassword);
+		/*
+		 * byte[] actualByte = Base64.getDecoder() .decode(customerPassword); String
+		 * decodedPassword = new String(actualByte);
+		 * System.out.println(decodedPassword);
+		 */
+		String encodedPassword = Base64.getEncoder().encodeToString(customerPassword.getBytes());
+		int customerId = customerRepo.isValidCustomer(customerEmail, encodedPassword);
+        
 		if (customerId > 0) {
 			Customer customer = customerRepo.findCustomerbyCustomerId(customerId);
 			return customer;
