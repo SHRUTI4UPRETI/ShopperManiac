@@ -20,7 +20,7 @@ public class ProductRepoImpl implements ProductRepo {
 	
 	@Override
 	public List<Product> latestFiveProducts() {
-		String sql = "select pd from Product pd where rownum<=5 and pd.isProductApproved=:status order by pd.productId desc";
+		String sql = "select pd from Product pd where rownum<=4 and pd.isProductApproved=:status order by pd.productId desc";
 		Query qry = em.createQuery(sql);
 		qry.setParameter("status", true);
 
@@ -47,10 +47,10 @@ public class ProductRepoImpl implements ProductRepo {
 
 	@Override
 	public List<Product> viewProductByCategory(String productCategory) {
-		String sql="select product from Product product where product.productCategory=:ct";
+		String sql="select product from Product product where product.productCategory=:ct and product.isProductApproved= :status";
 		TypedQuery<Product> qry=em.createQuery(sql,Product.class);
 		qry.setParameter("ct", productCategory);
-		
+		qry.setParameter("status", true);
 		List<Product> products=qry.getResultList();
 		
 		return products;
