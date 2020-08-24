@@ -31,6 +31,6 @@ public interface CustomerRepository {
 	
 	public int changeQuantityInCart(int customerId, int itemId, int itemQuantity);
 	
-	
+	public List<Items> viewItemsInCart(int customerId);
 	
 }
