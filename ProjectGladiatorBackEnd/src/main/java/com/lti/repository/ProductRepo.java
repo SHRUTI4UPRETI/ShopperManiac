@@ -16,5 +16,7 @@ public interface ProductRepo {
 	List<Product> viewProductByCategory(String productCategory);
 	
 	int checkStockQuantity(int itemId);
+	
+	List<Product>searchProduct(String searchValue);
 
 }

@@ -1,5 +1,6 @@
 package com.lti.repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -65,6 +66,17 @@ public class ProductRepoImpl implements ProductRepo {
 		int qty = item.getProduct().getProductQuantity();
 
 		return qty;
+	}
+
+	@Override
+	public List<Product> searchProduct(String searchValue) {
+		List<Product> products = new ArrayList<>();
+
+		String sql = "select product from Product product where product.productName like :ch or product.productSubCategory like :ch";
+		TypedQuery<Product> query = em.createQuery(sql, Product.class);
+		query.setParameter("ch", "%"+searchValue+"%");
+		products = query.getResultList();
+		return products;
 	}
 
 }
