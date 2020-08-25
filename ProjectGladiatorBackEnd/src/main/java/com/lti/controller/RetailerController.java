@@ -46,7 +46,7 @@ public class RetailerController {
 			byte[] actualByte = Base64.getDecoder().decode(encodedPass);
 			String decodedPass = new String(actualByte); 
 			retailer.setRetailerPassword(decodedPass);
-			message.setText("Hi, " + retailer.getRetailerName() + "Your UserName is: "+retailer.getRetailerEmail()+"and your Password is: "+retailer.getRetailerPassword()+" Thankyou for collaborating with ShopperManiac Ltd");
+			message.setText("Hi, " + retailer.getRetailerName() + " \n Your UserName is: "+retailer.getRetailerEmail()+"and your Password is: "+retailer.getRetailerPassword()+" \n Thankyou for collaborating with ShopperManiac");
 			mailSender.send(message);
 		}catch (RetailerServiceException e) {
 			status.setStatus(StatusType.FAILURE);
