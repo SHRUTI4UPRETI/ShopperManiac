@@ -64,7 +64,7 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 	
 	@Override
-	public int placeOrderforCustomer(Order order, int customerId) {
+	public String placeOrderforCustomer(Order order, int customerId) {
 		return customerRepo.placeOrderforCustomer(order, customerId);
 	}
 

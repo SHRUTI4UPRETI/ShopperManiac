@@ -16,7 +16,7 @@ public interface CustomerService {
 	public int addItem(List<Items> items, int customerId, int productId);
 	public int changeQuantityInCart(int customerId, int itemId, int itemQuantity);
 
-	public int placeOrderforCustomer(Order order, int customerId);
+	public String placeOrderforCustomer(Order order, int customerId);
 
 	public List<Items> viewItemsInCart(int customerId);
 	
