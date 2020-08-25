@@ -12,9 +12,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.lti.dto.ItemIdDto;
 import com.lti.dto.ItemQuantityDto;
+import com.lti.dto.ProductAddDto;
 import com.lti.dto.ProductCategoryDto;
 import com.lti.dto.ProductDto;
 import com.lti.dto.ProductIdDto;
+import com.lti.dto.SearchProductDto;
 import com.lti.dto.SpecificProductDto;
 import com.lti.model.Product;
 import com.lti.service.ProductService;
@@ -90,12 +92,46 @@ public class ProductController {
 
 	@PostMapping("/checkStock")
 	public ItemQuantityDto checkStock(@RequestBody ItemIdDto itemId) {
-		
+
 		ItemQuantityDto stockQuantity = new ItemQuantityDto();
-		
+
 		stockQuantity.setItemQuantity(productServ.checkStockQuantity(itemId.getItemId()));
-		
+
 		return stockQuantity;
 	}
+
+	@PostMapping("/searchProduct")
+	public List<ProductDto> searchProduct(@RequestBody SearchProductDto searchValue) {
+		List<Product> products = productServ.searchProduct(searchValue.getSearchValue());
+
+		List<ProductDto> productDto = new ArrayList<>();
+
+		for (Product p : products) {
+			ProductDto productD = new ProductDto();
+			productD.setProductName(p.getProductName());
+			productD.setProductId(p.getProductId());
+			productD.setProductImagePath(p.getProductImagePath());
+			productDto.add(productD);
+		}
+		return productDto;
+	}
+
+	@PostMapping("/addProduct")
+	public ProductIdDto addProduct(@RequestBody ProductAddDto productAddDto) {
+		Product product = new Product();
+		ProductIdDto productIdDto = new ProductIdDto();
+		product.setProductName(productAddDto.getProductName());
+		product.setProductBrandName(productAddDto.getProductBrandName());
+		product.setProductCategory(productAddDto.getProductCategory());
+		product.setProductPrice(productAddDto.getProductPrice());
+		product.setProductDescription(productAddDto.getProductDescription());
+		product.setProductSubCategory(productAddDto.getProductSubCategory());
+		product.setProductQuantity(productAddDto.getProductQuantity());
+		product.setProductApproved(true);                // by default false
+		int pid = productServ.addProduct(product, productAddDto.getRetailerId());
+		productIdDto.setProductId(pid);
+		return productIdDto;
+	}
+	
 
 }

@@ -16,4 +16,8 @@ public interface ProductService {
 	List<Product> viewProductByCategory(String productCategory);
 	
 	public int checkStockQuantity(int itemId);
+	
+	public List<Product> searchProduct(String searchValue);
+
+	int addProduct(Product product, int retailerId);
 }

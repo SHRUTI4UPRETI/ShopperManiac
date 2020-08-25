@@ -42,7 +42,7 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public Product viewSpecificProduct(int productId) {
-		Product p=productRepo.viewSpecificProduct(productId);
+		Product p = productRepo.viewSpecificProduct(productId);
 		String imageName = p.getProductImagePath();
 		imageName = "assets/" + imageName + ".jpg";
 		p.setProductImagePath(imageName);
@@ -67,5 +67,26 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public int checkStockQuantity(int itemId) {
 		return productRepo.checkStockQuantity(itemId);
+	}
+
+	@Override
+	public List<Product> searchProduct(String searchValue) {
+
+		List<Product> products = new ArrayList<>();
+		products = productRepo.searchProduct(searchValue);
+		for (Product p : products) {
+			String imageName = p.getProductImagePath();
+			imageName = "assets/" + imageName + ".jpg";
+			p.setProductImagePath(imageName);
+		}
+
+		return products;
+	}
+	
+	
+	@Override
+	public int addProduct(Product product, int retailerId) {
+		return productRepo.addProduct(product, retailerId);
+		
 	}
 }

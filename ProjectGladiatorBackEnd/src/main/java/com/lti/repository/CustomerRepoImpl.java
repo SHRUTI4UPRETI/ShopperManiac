@@ -44,7 +44,6 @@ public class CustomerRepoImpl implements CustomerRepository {
 	@Transactional
 	public int updateCustomerPassword(int customerId, String customerPassword) {
 		
-		
 		Customer customer = em.find(Customer.class, customerId);
 		customer.setCustomerPassword(customerPassword);
 		em.merge(customer);

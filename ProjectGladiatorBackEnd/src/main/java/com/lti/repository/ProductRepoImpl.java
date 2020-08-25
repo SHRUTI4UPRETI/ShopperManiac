@@ -1,17 +1,20 @@
 package com.lti.repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Repository;
 
 import com.lti.dto.ProductDto;
 import com.lti.model.Items;
 import com.lti.model.Product;
+import com.lti.model.Retailer;
 
 @Repository
 public class ProductRepoImpl implements ProductRepo {
@@ -65,6 +68,28 @@ public class ProductRepoImpl implements ProductRepo {
 		int qty = item.getProduct().getProductQuantity();
 
 		return qty;
+	}
+
+	@Override
+	public List<Product> searchProduct(String searchValue) {
+		List<Product> products = new ArrayList<>();
+
+		String sql = "select product from Product product where product.productName like :ch or product.productSubCategory like :ch";
+		TypedQuery<Product> query = em.createQuery(sql, Product.class);
+		query.setParameter("ch", "%"+searchValue+"%");
+		products = query.getResultList();
+		return products;
+	}
+	
+	@Override
+	@Transactional
+	public int addProduct(Product product, int retailerId) {
+		System.out.println(product);
+		Retailer retailer =em.find(Retailer.class, retailerId);
+		product.setRetailer(retailer);
+		Product product1 = em.merge(product);
+		return product1.getProductId();
+		
 	}
 
 }

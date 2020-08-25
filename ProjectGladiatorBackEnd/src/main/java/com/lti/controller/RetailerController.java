@@ -15,6 +15,8 @@ import org.springframework.mail.MailException;
 import com.lti.dto.LoginDto;
 import com.lti.dto.RetailerStatus;
 import com.lti.dto.Status;
+import com.lti.dto.UpdateCustomerPasswordDto;
+import com.lti.dto.UpdateRetailerPasswordDto;
 import com.lti.dto.Status.StatusType;
 import com.lti.exception.RetailerServiceException;
 import com.lti.model.Retailer;
@@ -71,5 +73,20 @@ public class RetailerController {
 			retailerStatus.setMessage(e.getMessage());
 		}
 		return retailerStatus;
+	}
+	
+	@PostMapping("/updateRetailerPassword")
+	public Status updateRetailerPassword(@RequestBody UpdateRetailerPasswordDto updateDto) {
+		Status status = new Status();
+		int i = retailerService.updateRetailerPassword(updateDto.getRetailerId(), updateDto.getRetailerPassword());
+		if (i>0) {
+			status.setMessage("Password Updated");
+			status.setStatus(StatusType.SUCCESS);
+			
+		}else {
+			status.setMessage("Password update Failed");
+			status.setStatus(StatusType.FAILURE);
+		}
+		return status;
 	}
 }
