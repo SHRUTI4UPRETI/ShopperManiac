@@ -5,6 +5,7 @@ import javax.persistence.PersistenceContext;
 
 import org.springframework.stereotype.Repository;
 
+import com.lti.model.Customer;
 import com.lti.model.Retailer;
 
 import org.springframework.transaction.annotation.Transactional;
@@ -38,5 +39,15 @@ public class RetailerRepositoryImpl implements RetailerRepository {
 				"select r.retailerId from Retailer r where r.retailerEmail=:email and r.retailerPassword=:password")
 				.setParameter("email", retailerEmail).setParameter("password", retailerPassword).getSingleResult();
 	
+	}
+	
+	@Override
+	@Transactional
+	public int updateRetailerPassword(int retailerId, String retailerPassword) {
+		
+		Retailer retailer = em.find(Retailer.class, retailerId);
+		retailer.setRetailerPassword(retailerPassword);
+		em.merge(retailer);
+		return 1;
 	}
 }

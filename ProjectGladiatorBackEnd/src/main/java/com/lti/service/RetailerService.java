@@ -8,4 +8,6 @@ public interface RetailerService {
 
 	void register(Retailer retailer);
 
+	int updateRetailerPassword(int retailerId, String retailerPassword);
+
 }
