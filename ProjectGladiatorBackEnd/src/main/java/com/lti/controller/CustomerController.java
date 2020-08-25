@@ -17,7 +17,9 @@ import com.lti.dto.ItemDto;
 import com.lti.dto.ItemsInCartDto;
 import com.lti.dto.LoginDto;
 import com.lti.dto.OrderDisplayDto;
+import com.lti.dto.OrderDto;
 import com.lti.dto.PlaceOrderDto;
+import com.lti.dto.ProductDetailsDto;
 import com.lti.dto.SpecificProductDto;
 import com.lti.dto.Status;
 import com.lti.dto.Status.StatusType;
@@ -36,8 +38,8 @@ import ch.qos.logback.core.net.SyslogOutputStream;
 @CrossOrigin
 public class CustomerController {
 
-	  @Autowired
-	  private MailSender mailSender;
+	@Autowired
+	private MailSender mailSender;
 	
 	@Autowired
 	private CustomerService customerServ;
@@ -186,4 +188,21 @@ public class CustomerController {
 		return allOrders;
 
    }
+	
+	@PostMapping("/viewProductsByOrder")
+	public List<ProductDetailsDto> displayProductsByOrderId(@RequestBody OrderDto orderDto){
+		List<Items> items = customerServ.displayProductByOrderId(orderDto.getOrderId());
+		List<ProductDetailsDto> allPurchasedProducts = new ArrayList<>();
+		for (Items i: items) {
+			ProductDetailsDto pdo = new ProductDetailsDto();
+			pdo.setItemName(i.getItemName());
+			pdo.setItemPrice(i.getItemPrice());
+			pdo.setItemQuantity(i.getItemQuantity());
+			pdo.setItemTotalPrice(i.getItemPrice());
+			
+			allPurchasedProducts.add(pdo);
+		}
+		
+		return allPurchasedProducts;
+	}
 }
