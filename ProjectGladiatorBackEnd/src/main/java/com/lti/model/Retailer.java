@@ -35,7 +35,7 @@ public class Retailer {
 	private String retailerPassword;
 	
 	@Column
-	private int retailerMobile;
+	private String retailerMobile;
 
 	
 	@OneToMany(mappedBy = "retailer", cascade = CascadeType.ALL)
@@ -73,11 +73,11 @@ public class Retailer {
 		this.retailerPassword = retailerPassword;
 	}
 
-	public int getRetailerMobile() {
+	public String getRetailerMobile() {
 		return retailerMobile;
 	}
 
-	public void setRetailerMobile(int retailerMobile) {
+	public void setRetailerMobile(String retailerMobile) {
 		this.retailerMobile = retailerMobile;
 	}
 

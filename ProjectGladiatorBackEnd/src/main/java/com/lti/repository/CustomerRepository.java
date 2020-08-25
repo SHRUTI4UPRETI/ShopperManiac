@@ -11,8 +11,6 @@ public interface CustomerRepository {
 
 	public void addNewCustomer(Customer customer);
 
-	boolean updateCustomer(Customer customer);
-		
 	int isValidCustomer(String customerEmail, String customerPassword);
 
 	public int addCart(List<Cart> carts, int customerId);
@@ -34,6 +32,8 @@ public interface CustomerRepository {
 	public List<Items> viewItemsInCart(int customerId);
 
 	List<Order> displayOrderForCustomer(int customerId);
+
+	int updateCustomerPassword(int customerId, String customerPassword);
 	
 	
 }

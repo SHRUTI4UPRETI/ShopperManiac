@@ -4,7 +4,6 @@ public class PlaceOrderDto {
 
 	public int customerId;
 	
-	
 
 	public int getCustomerId() {
 		return customerId;

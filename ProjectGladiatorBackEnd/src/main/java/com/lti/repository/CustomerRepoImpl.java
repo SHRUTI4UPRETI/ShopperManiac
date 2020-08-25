@@ -41,9 +41,17 @@ public class CustomerRepoImpl implements CustomerRepository {
 	}
 
 	@Override
-	public boolean updateCustomer(Customer customer) {
-		// TODO Auto-generated method stub
-		return false;
+	@Transactional
+	public int updateCustomerPassword(int customerId, String customerPassword) {
+		
+		//String sql = "update Customer c set c.customerPasswrd =: pwd where c.customerId =: cid";
+		//TypedQuery<Customer> query = em.createQuery(sql, Customer.class);
+		//query.setParameter("cid", customerId);
+		//query.setParameter("pwd", customerPassword);
+		Customer customer = em.find(Customer.class, customerId);
+		customer.setCustomerPassword(customerPassword);
+		em.merge(customer);
+		return 1;
 	}
 
 	@Override
@@ -290,8 +298,5 @@ public class CustomerRepoImpl implements CustomerRepository {
 		List<Items> resultList = query.getResultList();
 		return resultList;
 	}
-	
-	
-	
-	
+
 }
