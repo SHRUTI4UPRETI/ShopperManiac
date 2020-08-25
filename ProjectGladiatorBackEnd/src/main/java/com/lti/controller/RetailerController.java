@@ -1,5 +1,7 @@
 package com.lti.controller;
 
+import java.util.Base64;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
@@ -40,7 +42,11 @@ public class RetailerController {
 			message.setFrom("ShoppingManiac4@outlook.com");
 			message.setTo(retailer.getRetailerEmail());       /* retailer.getRetailerEmail() */ 
 			message.setSubject("Thank You for registration");
-			message.setText("Your UserName is: "+retailer.getRetailerEmail()+"and your Password is: "+retailer.getRetailerPassword()+"Thankyou");
+			String encodedPass = retailer.getRetailerPassword();
+			byte[] actualByte = Base64.getDecoder().decode(encodedPass);
+			String decodedPass = new String(actualByte); 
+			retailer.setRetailerPassword(decodedPass);
+			message.setText("Hi, " + retailer.getRetailerName() + "Your UserName is: "+retailer.getRetailerEmail()+"and your Password is: "+retailer.getRetailerPassword()+" Thankyou for collaborating with ShopperManiac Ltd");
 			mailSender.send(message);
 		}catch (RetailerServiceException e) {
 			status.setStatus(StatusType.FAILURE);
