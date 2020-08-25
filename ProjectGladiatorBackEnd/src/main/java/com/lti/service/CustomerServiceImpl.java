@@ -88,5 +88,12 @@ public class CustomerServiceImpl implements CustomerService {
 	public List<Items> displayProductByOrderId(int orderId){
 		return customerRepo.displayProductByOrderId(orderId);
 	}
+	
+	@Override
+	public int updateCustomerPassword(int customerId, String customerPassword) {
+		String encodedPassword = Base64.getEncoder().encodeToString(customerPassword.getBytes());
+		return customerRepo.updateCustomerPassword(customerId, encodedPassword);
+		
+	}
 
 }

@@ -23,6 +23,7 @@ import com.lti.dto.ProductDetailsDto;
 import com.lti.dto.SpecificProductDto;
 import com.lti.dto.Status;
 import com.lti.dto.Status.StatusType;
+import com.lti.dto.UpdateCustomerPasswordDto;
 import com.lti.dto.loginStatus;
 import com.lti.exception.CustomerServiceException;
 import com.lti.model.Customer;
@@ -205,4 +206,20 @@ public class CustomerController {
 		
 		return allPurchasedProducts;
 	}
+	
+	@PostMapping("/updateCustomerPassword")
+	public Status updateCustomerPassword(@RequestBody UpdateCustomerPasswordDto updateDto) {
+		Status status = new Status();
+		int i = customerServ.updateCustomerPassword(updateDto.getCustomerId(), updateDto.getCustomerPassword());
+		if (i>0) {
+			status.setMessage("Password Updated");
+			status.setStatus(StatusType.SUCCESS);
+			
+		}else {
+			status.setMessage("Password update Failed");
+			status.setStatus(StatusType.FAILURE);
+		}
+		return status;
+	}
+	
 }
