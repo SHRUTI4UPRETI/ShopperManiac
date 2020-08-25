@@ -16,6 +16,7 @@ import com.lti.dto.ChangeCartQuantityDto;
 import com.lti.dto.ItemDto;
 import com.lti.dto.ItemsInCartDto;
 import com.lti.dto.LoginDto;
+import com.lti.dto.OrderDisplayDto;
 import com.lti.dto.PlaceOrderDto;
 import com.lti.dto.SpecificProductDto;
 import com.lti.dto.Status;
@@ -159,5 +160,21 @@ public class CustomerController {
 
 		return returnItems;
 	}
+	
+	@PostMapping("/viewOrdersByCustomer")
+	public List<OrderDisplayDto> displayOrderForCustomer(@RequestBody PlaceOrderDto placeOrderDto){
+		List<Order> orders = customerServ.displayOrderForCustomer(placeOrderDto.getCustomerId());
+		List<OrderDisplayDto> allOrders = new ArrayList<>();
+		for (Order o : orders) {
+			OrderDisplayDto od = new OrderDisplayDto();
+			od.setOrderId(o.getOrderId());
+			od.setOrderDate(o.getOrderDate());
+			od.setOrderTotalPrice(o.getOrderTotalPrice());
+			
+			allOrders.add(od);
+	}
+	
+		return allOrders;
 
+   }
 }

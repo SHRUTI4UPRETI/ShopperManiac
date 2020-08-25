@@ -19,5 +19,7 @@ public interface CustomerService {
 	public int placeOrderforCustomer(Order order, int customerId);
 
 	public List<Items> viewItemsInCart(int customerId);
+
+	List<Order> displayOrderForCustomer(int customerId);
 	
 }

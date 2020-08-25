@@ -132,6 +132,7 @@ public class CustomerRepoImpl implements CustomerRepository {
 		List<Cart> carts1 = query.getResultList();
 
 		Cart cart = carts1.get(0);
+		
 		int cartId = cart.getCartId();
 
 		String sql = "select it from Items it where it.cart.cartId=:cartId";
@@ -157,6 +158,7 @@ public class CustomerRepoImpl implements CustomerRepository {
 		int cid = cart.getCustomer().getCustomerId();
 		// cart.setOrder(order);
 		order.setCart(cart);
+		
 		Order od = em.merge(order);
 
 		int status = setCartStatusInactive(cartId);
@@ -177,11 +179,6 @@ public class CustomerRepoImpl implements CustomerRepository {
 		return od.getOrderId();
 	}
 
-	@Override
-	public List<Items> displayProductByOrderId(int orderId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public int changeItemQuantity(int itemQuantity, int productId, int customerId) {
@@ -249,5 +246,45 @@ public class CustomerRepoImpl implements CustomerRepository {
 
 		List<Items> itemList = qry.getResultList();
 		return itemList;
+	}
+	
+	@Override
+	public List<Order> displayOrderForCustomer(int customerId){
+		String sql="select od from Order od where od.customer.customerId=:custId";
+		TypedQuery<Order> query = em.createQuery(sql, Order.class);
+		query.setParameter("custId", customerId);
+		List<Order> orders = query.getResultList();
+		
+		return orders;
+	}
+	
+	@Override
+	public List<Items> displayProductByOrderId(int orderId) {
+		// String sql = "select ti from Items ti where ti.cart.cartId=(select
+		// tc.cartId from Cart tc where tc.customer.customerId=:cid)";
+		// String sql="select it from Items it where it.cart.cartId=(select
+		// od.cart.cartId from Order od where od.orderId=:id)";
+		// String sql="select od,od.customer.customerId from Order od where
+		// od.orderId=:id";
+		/*
+		 * String
+		 * sql="select od, ct, it, pd from Order od join Cart ct on od.cart.cartId=ct.cartId"
+		 * +
+		 * " join Items it on ct.cartId=it.cart.cartId join Product pd on it.product.productId=pd.productId "
+		 * + "where orderId=:id";
+		 */
+		// sql = "select ti, ti.product from Items ti join ti.product p on
+		// ti.product.productId=20202 where ti.cart.cartId=(select tc.cartId
+		// from Cart tc where tc.customer.customerId=:cid)";
+
+		Order order = em.find(Order.class, orderId);
+		int cartId = order.getCart().getCartId();
+
+		String sql = "select it from Items it where it.cart.cartId=:cartId";
+		TypedQuery<Items> query = em.createQuery(sql, Items.class);
+		query.setParameter("cartId", cartId);
+
+		List<Items> resultList = query.getResultList();
+		return resultList;
 	}
 }

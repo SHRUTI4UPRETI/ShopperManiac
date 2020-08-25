@@ -40,6 +40,9 @@ public class Customer {
 	
 	@OneToMany(mappedBy="customer", cascade=CascadeType.ALL)
 	private List<Cart> cart;
+	
+	@OneToMany(mappedBy="customer", cascade=CascadeType.ALL)
+	private List<Order> order;
 
 	public int getCustomerId() {
 		return customerId;

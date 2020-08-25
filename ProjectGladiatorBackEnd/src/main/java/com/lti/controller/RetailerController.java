@@ -24,8 +24,8 @@ import com.lti.service.RetailerService;
 @CrossOrigin
 public class RetailerController {
 	 
-	  @Autowired
-	  private MailSender mailSender;
+	@Autowired
+	private MailSender mailSender;
 	
 	@Autowired
 	private RetailerService retailerService;

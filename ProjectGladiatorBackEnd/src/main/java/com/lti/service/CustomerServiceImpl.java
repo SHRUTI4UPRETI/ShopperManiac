@@ -79,5 +79,9 @@ public class CustomerServiceImpl implements CustomerService {
 		}
 		return items;
 	}
+	@Override
+	public List<Order> displayOrderForCustomer(int customerId){
+		return customerRepo.displayOrderForCustomer(customerId);
+	}
 
 }
