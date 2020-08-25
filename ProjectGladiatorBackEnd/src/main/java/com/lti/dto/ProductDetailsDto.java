@@ -11,7 +11,7 @@ public class ProductDetailsDto {
 	private int itemQuantity;
 	
 	private int itemTotalPrice;
-
+	
 	public String getItemName() {
 		return itemName;
 	}

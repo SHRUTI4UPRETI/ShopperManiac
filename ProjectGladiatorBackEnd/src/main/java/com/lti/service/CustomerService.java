@@ -24,6 +24,10 @@ public interface CustomerService {
 
 	List<Items> displayProductByOrderId(int orderId);
 	
+
+	Customer displayCustomerDetails(int customerId);
+
 	int updateCustomerPassword(int customerId, String customerPassword);
+
 	
 }

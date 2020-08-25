@@ -90,6 +90,11 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 	
 	@Override
+
+	public Customer displayCustomerDetails(int customerId) {
+		return customerRepo.findCustomerbyCustomerId(customerId);
+	}
+
 	public int updateCustomerPassword(int customerId, String customerPassword) {
 		String encodedPassword = Base64.getEncoder().encodeToString(customerPassword.getBytes());
 		return customerRepo.updateCustomerPassword(customerId, encodedPassword);

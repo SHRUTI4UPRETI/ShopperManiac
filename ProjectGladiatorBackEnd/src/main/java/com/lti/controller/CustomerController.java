@@ -8,11 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.web.bind.annotation.CrossOrigin;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lti.dto.ChangeCartQuantityDto;
+import com.lti.dto.DisplayCustomerDto;
 import com.lti.dto.ItemDto;
 import com.lti.dto.ItemsInCartDto;
 import com.lti.dto.LoginDto;
@@ -20,6 +22,7 @@ import com.lti.dto.OrderDisplayDto;
 import com.lti.dto.OrderDto;
 import com.lti.dto.PlaceOrderDto;
 import com.lti.dto.ProductDetailsDto;
+import com.lti.dto.ProductIdDto;
 import com.lti.dto.SpecificProductDto;
 import com.lti.dto.Status;
 import com.lti.dto.Status.StatusType;
@@ -207,6 +210,7 @@ public class CustomerController {
 		return allPurchasedProducts;
 	}
 	
+
 	@PostMapping("/updateCustomerPassword")
 	public Status updateCustomerPassword(@RequestBody UpdateCustomerPasswordDto updateDto) {
 		Status status = new Status();
@@ -220,6 +224,23 @@ public class CustomerController {
 			status.setStatus(StatusType.FAILURE);
 		}
 		return status;
+	}
+	
+	@PostMapping("/dislayCustomerDetails")
+	public DisplayCustomerDto displayCustomerDetails(@RequestBody PlaceOrderDto customerId) {
+		
+	Customer customer = customerServ.displayCustomerDetails(customerId.getCustomerId());
+    
+	DisplayCustomerDto displayCustomerDto = new DisplayCustomerDto();
+	
+	displayCustomerDto.setCustomerName(customer.getCustomerName());
+	displayCustomerDto.setCustomerEmail(customer.getCustomerEmail());
+	displayCustomerDto.setCustomerAddress(customer.getCustomerAddress());
+	displayCustomerDto.setCustomerMobile(customer.getCustomerMobile());
+	
+	
+	return displayCustomerDto;	
+	
 	}
 	
 }
