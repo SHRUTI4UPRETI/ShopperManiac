@@ -160,6 +160,7 @@ public class CustomerRepoImpl implements CustomerRepository {
 		int cid = cart.getCustomer().getCustomerId();
 		// cart.setOrder(order);
 		order.setCart(cart);
+		order.setCustomer(customer);
 		
 		Order od = em.merge(order);
 

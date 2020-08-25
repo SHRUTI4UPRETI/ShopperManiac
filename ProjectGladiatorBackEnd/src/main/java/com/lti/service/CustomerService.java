@@ -21,5 +21,7 @@ public interface CustomerService {
 	public List<Items> viewItemsInCart(int customerId);
 
 	List<Order> displayOrderForCustomer(int customerId);
+
+	List<Items> displayProductByOrderId(int orderId);
 	
 }
