@@ -55,7 +55,7 @@ public class CustomerController {
 			message.setFrom("ShoppingManiac4@outlook.com");
 			message.setTo(customer.getCustomerEmail());       /* retailer.getRetailerEmail() */ 
 			message.setSubject("Thank You for registration");
-			message.setText("Thank you "+customer.getCustomerName()+" for registration /n Have a nice Day :)");
+			message.setText("Thank you "+customer.getCustomerName()+" for registration. \n Have a nice Day :)");
 			mailSender.send(message);
 			
 		} catch (CustomerServiceException e) {
@@ -128,10 +128,19 @@ public class CustomerController {
 		Status status = new Status();
 		Order order = new Order();
 		order.setOrderDate(LocalDate.now());
-		int i = customerServ.placeOrderforCustomer(order, placeOrder.getCustomerId());
-		if (i > 0) {
+		String i = customerServ.placeOrderforCustomer(order, placeOrder.getCustomerId());
+		if (i != null) {
 			status.setMessage("Order Placed");
 			status.setStatus(StatusType.SUCCESS);
+			
+
+			SimpleMailMessage message = new SimpleMailMessage();
+			message.setFrom("ShoppingManiac4@outlook.com");
+			message.setTo(i);       /* customer.getRetailerEmail() */ 
+			message.setSubject("Order Placed Successfully");
+			message.setText("Your Order have been placed. \n Order placed on :"+order.getOrderDate()+"\n Deliver within 7 working Day. \n Happy Shopping :)");
+			mailSender.send(message);
+			
 		} else {
 			status.setMessage("Order Not placed");
 			status.setStatus(StatusType.FAILURE);

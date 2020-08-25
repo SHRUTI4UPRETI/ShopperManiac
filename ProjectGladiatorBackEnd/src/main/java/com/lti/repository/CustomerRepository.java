@@ -21,7 +21,7 @@ public interface CustomerRepository {
 
 	public int addItem(List<Items> items, int customerId, int productId);
 
-	public int placeOrderforCustomer(Order order,int customerId);
+	public String placeOrderforCustomer(Order order,int customerId);
 
 	public List<Items> displayProductByOrderId(int orderId);
 

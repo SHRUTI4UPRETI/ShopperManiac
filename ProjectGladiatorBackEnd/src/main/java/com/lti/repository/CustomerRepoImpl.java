@@ -122,9 +122,11 @@ public class CustomerRepoImpl implements CustomerRepository {
 
 	@Override
 	@Transactional
-	public int placeOrderforCustomer(Order order, int customerId) {
+	public String placeOrderforCustomer(Order order, int customerId) {
+		Customer customer = em.find(Customer.class, customerId);
+		
 		String sql1 = "select c from Cart c where c.cartStatus=:status and c.customer.customerId=:custId";
-
+        
 		TypedQuery<Cart> query = em.createQuery(sql1, Cart.class);
 		query.setParameter("custId", customerId);
 		query.setParameter("status", true);
@@ -176,7 +178,7 @@ public class CustomerRepoImpl implements CustomerRepository {
 		if (newCart > 0)
 			System.out.println("New Active cart created");
 
-		return od.getOrderId();
+		return customer.getCustomerEmail();
 	}
 
 
