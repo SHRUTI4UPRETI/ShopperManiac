@@ -24,4 +24,6 @@ public interface CustomerService {
 
 	List<Items> displayProductByOrderId(int orderId);
 	
+	Customer findCustomerbyCustomerId(int customerId);
+	
 }

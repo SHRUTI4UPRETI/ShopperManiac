@@ -88,5 +88,9 @@ public class CustomerServiceImpl implements CustomerService {
 	public List<Items> displayProductByOrderId(int orderId){
 		return customerRepo.displayProductByOrderId(orderId);
 	}
-
+	
+	@Override
+	public Customer findCustomerbyCustomerId(int customerId) {
+		return customerRepo.findCustomerbyCustomerId(customerId);
+	}
 }

@@ -290,4 +290,8 @@ public class CustomerRepoImpl implements CustomerRepository {
 		List<Items> resultList = query.getResultList();
 		return resultList;
 	}
+	
+	
+	
+	
 }
