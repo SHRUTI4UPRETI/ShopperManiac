@@ -47,4 +47,10 @@ public class RetailerServiceImpl implements RetailerService {
 		}
 
 	}
+	
+	@Override
+	public int updateRetailerPassword(int retailerId, String retailerPassword) {
+		String encodedPassword = Base64.getEncoder().encodeToString(retailerPassword.getBytes());
+		return retailerRepo.updateRetailerPassword(retailerId, encodedPassword);	}
+	
 }
