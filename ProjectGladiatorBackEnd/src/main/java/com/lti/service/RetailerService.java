@@ -10,4 +10,5 @@ public interface RetailerService {
 
 	int updateRetailerPassword(int retailerId, String retailerPassword);
 
+	Retailer displayRetailerDetails(int retailerId);
 }

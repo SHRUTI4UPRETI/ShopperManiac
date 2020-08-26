@@ -11,14 +11,18 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.mail.MailException;
 
-
+import com.lti.dto.DisplayCustomerDto;
+import com.lti.dto.DisplayRetailerDto;
 import com.lti.dto.LoginDto;
+import com.lti.dto.PlaceOrderDto;
+import com.lti.dto.RetailerIdDto;
 import com.lti.dto.RetailerStatus;
 import com.lti.dto.Status;
 import com.lti.dto.UpdateCustomerPasswordDto;
 import com.lti.dto.UpdateRetailerPasswordDto;
 import com.lti.dto.Status.StatusType;
 import com.lti.exception.RetailerServiceException;
+import com.lti.model.Customer;
 import com.lti.model.Retailer;
 import com.lti.service.RetailerService;
 
@@ -89,4 +93,20 @@ public class RetailerController {
 		}
 		return status;
 	}
+	
+	@PostMapping("/dislayRetailerDetails")
+	public DisplayRetailerDto displayRetailerDetails(@RequestBody RetailerIdDto retailerId) {
+		
+	Retailer retailer = retailerService.displayRetailerDetails(retailerId.getRetailerId());
+    
+	DisplayRetailerDto displayRetailerDto = new DisplayRetailerDto();
+	
+	displayRetailerDto.setRetailerName(retailer.getRetailerName());
+	displayRetailerDto.setRetailerEmail(retailer.getRetailerEmail());
+	displayRetailerDto.setRetailerMobile(retailer.getRetailerMobile());
+	
+	return displayRetailerDto;	
+	
+	}
+	
 }

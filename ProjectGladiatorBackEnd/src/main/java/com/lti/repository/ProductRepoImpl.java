@@ -11,6 +11,7 @@ import javax.persistence.TypedQuery;
 import org.springframework.stereotype.Repository;
 
 import com.lti.dto.ProductDto;
+import com.lti.model.Customer;
 import com.lti.model.Items;
 import com.lti.model.Product;
 
@@ -74,9 +75,20 @@ public class ProductRepoImpl implements ProductRepo {
 
 		String sql = "select product from Product product where product.productName like :ch or product.productSubCategory like :ch";
 		TypedQuery<Product> query = em.createQuery(sql, Product.class);
-		query.setParameter("ch", "%"+searchValue+"%");
+		query.setParameter("ch", "%" + searchValue + "%");
 		products = query.getResultList();
 		return products;
 	}
-
+	  
+	  @Override 
+	  public List<String> viewProductSubCategoryByCategory(String productCategory){
+		 String sql = "select DISTINCT product.subCategory  from Product product where product.productCategory=:ct";
+			//Query qry = em.createQuery(sql);
+	    TypedQuery<Product> qry = em.createQuery(sql, Product.class);
+	     qry.setParameter("ct", productCategory); 
+	     List<String> subCategory = qry.getResultList();
+	     return subCategory;
+	  }
+	
+	
 }

@@ -19,4 +19,6 @@ public interface ProductRepo {
 	
 	List<Product>searchProduct(String searchValue);
 
+	List<String> viewProductSubCategoryByCategory(String productCategory);
+
 }

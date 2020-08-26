@@ -17,6 +17,7 @@ import com.lti.dto.ProductDto;
 import com.lti.dto.ProductIdDto;
 import com.lti.dto.SearchProductDto;
 import com.lti.dto.SpecificProductDto;
+import com.lti.dto.SubCategoryDto;
 import com.lti.model.Product;
 import com.lti.service.ProductService;
 
@@ -114,5 +115,19 @@ public class ProductController {
 		}
 		return productDto;
 	}
-
+	
+	  @PostMapping("/SubCategory")
+	  public List<SubCategoryDto> viewProductSubCategoryByCategory(@RequestBody ProductCategoryDto productCategory)
+	  {
+		 List< Product> products = productServ.viewProductSubCategoryByCategory(productCategory.getProductCategory());
+		  List<SubCategoryDto> subCategoryDtos = new ArrayList<>();
+		  for(Product product: products) {
+			  SubCategoryDto subCategoryDto = new SubCategoryDto();
+			  subCategoryDto.setSubCategory(product.getProductSubCategory());
+			  subCategoryDtos.add(subCategoryDto);
+		  }
+	    return subCategoryDtos;
+	    
+	  }
+	 
 }

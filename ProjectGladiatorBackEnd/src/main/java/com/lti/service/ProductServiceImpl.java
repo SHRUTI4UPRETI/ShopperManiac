@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
 import com.lti.dto.ProductDto;
+import com.lti.dto.SubCategoryDto;
 import com.lti.model.Product;
 import com.lti.repository.ProductRepo;
 
@@ -82,4 +83,9 @@ public class ProductServiceImpl implements ProductService {
 
 		return products;
 	}
+	 @Override
+	  public List<Product> viewProductSubCategoryByCategory(String productCategory){
+		  return productRepo.viewProductSubCategoryByCategory(productCategory);
+		  }
+	 
 }

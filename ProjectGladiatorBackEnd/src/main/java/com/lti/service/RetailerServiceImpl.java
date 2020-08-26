@@ -8,6 +8,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.lti.exception.RetailerServiceException;
+import com.lti.model.Customer;
 import com.lti.model.Retailer;
 import com.lti.repository.RetailerRepository;
 
@@ -51,6 +52,13 @@ public class RetailerServiceImpl implements RetailerService {
 	@Override
 	public int updateRetailerPassword(int retailerId, String retailerPassword) {
 		String encodedPassword = Base64.getEncoder().encodeToString(retailerPassword.getBytes());
-		return retailerRepo.updateRetailerPassword(retailerId, encodedPassword);	}
+		return retailerRepo.updateRetailerPassword(retailerId, encodedPassword);	
+		}
+	
+	@Override
+
+	public Retailer displayRetailerDetails(int retailerId) {
+		return retailerRepo.findRetailerById(retailerId);
+	}
 	
 }
