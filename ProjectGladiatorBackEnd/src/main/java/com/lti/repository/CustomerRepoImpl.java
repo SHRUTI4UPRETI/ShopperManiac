@@ -43,7 +43,7 @@ public class CustomerRepoImpl implements CustomerRepository {
 	@Override
 	@Transactional
 	public int updateCustomerPassword(int customerId, String customerPassword) {
-		
+
 		Customer customer = em.find(Customer.class, customerId);
 		customer.setCustomerPassword(customerPassword);
 		em.merge(customer);
@@ -128,9 +128,9 @@ public class CustomerRepoImpl implements CustomerRepository {
 	@Transactional
 	public String placeOrderforCustomer(Order order, int customerId) {
 		Customer customer = em.find(Customer.class, customerId);
-		
+
 		String sql1 = "select c from Cart c where c.cartStatus=:status and c.customer.customerId=:custId";
-        
+
 		TypedQuery<Cart> query = em.createQuery(sql1, Cart.class);
 		query.setParameter("custId", customerId);
 		query.setParameter("status", true);
@@ -138,7 +138,7 @@ public class CustomerRepoImpl implements CustomerRepository {
 		List<Cart> carts1 = query.getResultList();
 
 		Cart cart = carts1.get(0);
-		
+
 		int cartId = cart.getCartId();
 
 		String sql = "select it from Items it where it.cart.cartId=:cartId";
@@ -165,7 +165,7 @@ public class CustomerRepoImpl implements CustomerRepository {
 		// cart.setOrder(order);
 		order.setCart(cart);
 		order.setCustomer(customer);
-		
+
 		Order od = em.merge(order);
 
 		int status = setCartStatusInactive(cartId);
@@ -185,7 +185,6 @@ public class CustomerRepoImpl implements CustomerRepository {
 
 		return customer.getCustomerEmail();
 	}
-
 
 	@Override
 	public int changeItemQuantity(int itemQuantity, int productId, int customerId) {
@@ -208,7 +207,7 @@ public class CustomerRepoImpl implements CustomerRepository {
 	@Override
 	@Transactional
 	public int changeQuantityInCart(int customerId, int itemId, int itemQuantity) {
-		System.out.println("hello2");
+		// System.out.println("hello2");
 		String sql = "select c from Cart c where c.customer.customerId=:custId and c.cartStatus=1";
 		TypedQuery<Cart> query = em.createQuery(sql, Cart.class);
 		query.setParameter("custId", customerId);
@@ -254,17 +253,17 @@ public class CustomerRepoImpl implements CustomerRepository {
 		List<Items> itemList = qry.getResultList();
 		return itemList;
 	}
-	
+
 	@Override
-	public List<Order> displayOrderForCustomer(int customerId){
-		String sql="select od from Order od where od.customer.customerId=:custId";
+	public List<Order> displayOrderForCustomer(int customerId) {
+		String sql = "select od from Order od where od.customer.customerId=:custId";
 		TypedQuery<Order> query = em.createQuery(sql, Order.class);
 		query.setParameter("custId", customerId);
 		List<Order> orders = query.getResultList();
-		
+
 		return orders;
 	}
-	
+
 	@Override
 	public List<Items> displayProductByOrderId(int orderId) {
 		// String sql = "select ti from Items ti where ti.cart.cartId=(select
@@ -295,5 +294,18 @@ public class CustomerRepoImpl implements CustomerRepository {
 		return resultList;
 	}
 
+	@Override
+	@Transactional
+	public int removeItemFromCart(int customerId, int itemId) {
+		String sql = "select c from Cart c where c.customer.customerId=:custId and c.cartStatus=1";
+		TypedQuery<Cart> query = em.createQuery(sql, Cart.class);
+		query.setParameter("custId", customerId);
+	
+		Cart cart = query.getSingleResult(); 
+		int cartId = cart.getCartId();
 		
+		Items item = em.find(Items.class, itemId);
+		em.remove(item);
+		return 1;
+	}
 }

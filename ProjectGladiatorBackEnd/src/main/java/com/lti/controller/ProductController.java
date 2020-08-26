@@ -20,6 +20,7 @@ import com.lti.dto.ProductCategoryDto;
 import com.lti.dto.ProductDto;
 import com.lti.dto.ProductIdDto;
 import com.lti.dto.ProductImageUploadDto;
+import com.lti.dto.ProductSubCategories;
 import com.lti.dto.SearchProductDto;
 import com.lti.dto.SpecificProductDto;
 
@@ -102,6 +103,22 @@ public class ProductController {
 		return Specificproducts;
 	}
 
+	@PostMapping("/viewProductSubCategory")
+	public List<ProductSubCategories> viewProductSubCategories(@RequestBody ProductCategoryDto productCategory) {
+
+		List<String> subCat = productServ.productSubCategoryByCategory(productCategory.getProductCategory());
+
+		List<ProductSubCategories> returnList = new ArrayList<ProductSubCategories>();
+
+		for (String s : subCat) {
+			ProductSubCategories productSubCategories = new ProductSubCategories();
+			productSubCategories.setProductSubCategories(s);
+			returnList.add(productSubCategories);
+		}
+
+		return returnList;
+	}
+
 	@PostMapping("/checkStock")
 	public ItemQuantityDto checkStock(@RequestBody ItemIdDto itemId) {
 
@@ -148,10 +165,17 @@ public class ProductController {
 
 	@PostMapping("/productImageUpload")
 	public Status upload(ProductImageUploadDto productImageUploadDto) {
-		//String imageUploadLocation = "D:/My Study Material/LTI/Virtual Training/Project Gladiator/Online Shopping Web App/Front end Angular/JVSD-OnlineShopping-Angular/src/assets/";	//jai path
-		String imageUploadLocation="D:/Docs/LTI/VT/Project Gladiator/JVSD-OnlineShopping-Angular/OnlineShopping/src/assets/"; //Vishal Path
-		// String imageUploadLocation="D:/angular846/JVSD-OnlineShopping-Angular/OnlineShopping/src/assets/" //divyansh path
-		// String imageUploadLocation="E:/ProjectGladiator/JVSD-OnlineShopping-Angular/OnlineShopping/src/assets/" //Shruti path
+		// String imageUploadLocation = "D:/My Study Material/LTI/Virtual
+		// Training/Project Gladiator/Online Shopping Web App/Front end
+		// Angular/JVSD-OnlineShopping-Angular/src/assets/"; //jai path
+		String imageUploadLocation = "D:/Docs/LTI/VT/Project Gladiator/JVSD-OnlineShopping-Angular/OnlineShopping/src/assets/"; // Vishal
+																																// Path
+		// String
+		// imageUploadLocation="D:/angular846/JVSD-OnlineShopping-Angular/OnlineShopping/src/assets/"
+		// //divyansh path
+		// String
+		// imageUploadLocation="E:/ProjectGladiator/JVSD-OnlineShopping-Angular/OnlineShopping/src/assets/"
+		// //Shruti path
 		String fileName = productImageUploadDto.getProductImage().getOriginalFilename();
 		String targetFile = imageUploadLocation + fileName;
 		try {
@@ -167,17 +191,16 @@ public class ProductController {
 
 		int i = productServ.updateProductImage(productImageUploadDto.getProductId(), fileName);
 		Status status = new Status();
-		if (i>0) {
-			
+		if (i > 0) {
+
 			status.setStatus(StatusType.SUCCESS);
 			status.setMessage("Uploaded!");
-			
-		}else {
+
+		} else {
 			status.setStatus(StatusType.FAILURE);
 			status.setMessage("Not Uploaded");
 		}
 		return status;
-		
 
 	}
 

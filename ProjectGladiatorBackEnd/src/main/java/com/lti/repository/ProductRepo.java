@@ -23,6 +23,6 @@ public interface ProductRepo {
 
 	int updateProductImage(int productId, String imagePath);
 
-	//List<String> viewProductSubCategoryByCategory(String productCategory);
+	List<Product> productSubCategoryByCategory(String productCategory);
 
 }

@@ -104,4 +104,13 @@ public class ProductRepoImpl implements ProductRepo {
 		return 1;
 	}
 
+	@Override
+	public List<Product> productSubCategoryByCategory(String productCategory){
+		String sql="select product from Product product where product.productCategory=:cat";
+		TypedQuery<Product> query=em.createQuery(sql,Product.class);
+		query.setParameter("cat", productCategory);
+		
+		List<Product> products=query.getResultList();
+		return products;
+	}
 }

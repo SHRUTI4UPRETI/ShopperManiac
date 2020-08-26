@@ -3,7 +3,6 @@ package com.lti.service;
 import java.util.List;
 
 import com.lti.dto.ProductDto;
-import com.lti.dto.SubCategoryDto;
 import com.lti.model.Product;
 
 public interface ProductService {
@@ -21,7 +20,8 @@ public interface ProductService {
 	public List<Product> searchProduct(String searchValue);
 
 	int addProduct(Product product, int retailerId);
+	
+    int updateProductImage(int productId, String imagePath);
 
-	int updateProductImage(int productId, String imagePath);
-
+	List<String> productSubCategoryByCategory(String productCategory);
 }

@@ -23,6 +23,7 @@ import com.lti.dto.OrderDto;
 import com.lti.dto.PlaceOrderDto;
 import com.lti.dto.ProductDetailsDto;
 import com.lti.dto.ProductIdDto;
+import com.lti.dto.RemoveCartDto;
 import com.lti.dto.SpecificProductDto;
 import com.lti.dto.Status;
 import com.lti.dto.Status.StatusType;
@@ -241,6 +242,22 @@ public class CustomerController {
 	
 	return displayCustomerDto;	
 	
+	}
+	
+	@PostMapping("/removeItemInCart")
+	public Status removeItemFromCart(@RequestBody RemoveCartDto rCartDto) {
+		int i = customerServ.removeItemFromCart(rCartDto.getCustomerId(), rCartDto.getItemId());
+		Status status = new Status();
+		if(i>0) {
+			status.setMessage("Item removed");
+			status.setStatus(StatusType.SUCCESS);
+		}
+		else {
+			status.setMessage("Error in deleting item");
+			status.setStatus(StatusType.FAILURE);
+		}
+		
+		return status;
 	}
 	
 }

@@ -34,6 +34,8 @@ public interface CustomerRepository {
 	List<Order> displayOrderForCustomer(int customerId);
 
 	int updateCustomerPassword(int customerId, String customerPassword);
+
+	int removeItemFromCart(int customerId, int itemId);
 	
 	
 }
