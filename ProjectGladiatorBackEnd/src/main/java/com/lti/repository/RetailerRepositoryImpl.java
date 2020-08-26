@@ -1,11 +1,15 @@
 package com.lti.repository;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 import org.springframework.stereotype.Repository;
 
 import com.lti.model.Customer;
+import com.lti.model.Product;
 import com.lti.model.Retailer;
 
 import org.springframework.transaction.annotation.Transactional;
@@ -48,6 +52,26 @@ public class RetailerRepositoryImpl implements RetailerRepository {
 		Retailer retailer = em.find(Retailer.class, retailerId);
 		retailer.setRetailerPassword(retailerPassword);
 		em.merge(retailer);
+		return 1;
+	}
+	
+	@Override
+	public List<Product> viewProductsOfRetailer(int retailerId) {
+		
+		String sql="select pd from Product pd where pd.retailer.retailerId=:rId";
+		TypedQuery<Product> query = em.createQuery(sql, Product.class);
+		query.setParameter("rId", retailerId);
+		List<Product> products = query.getResultList();
+		return products;
+	}
+	
+	@Override
+	@Transactional
+	public int changeProductStockInInventory(int productId, int productQuantity) {
+		
+		Product product = em.find(Product.class, productId);
+		product.setProductQuantity(productQuantity);
+		em.merge(product);
 		return 1;
 	}
 }

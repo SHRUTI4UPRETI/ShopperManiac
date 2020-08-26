@@ -15,5 +15,9 @@ public interface RetailerService {
 
 	Retailer displayRetailerDetails(int retailerId);
 
+	List<Product> viewProductsOfRetailer(int retailerId);
+
+	int changeProductStockInInventory(int productId, int productQuantity);
+
 
 }

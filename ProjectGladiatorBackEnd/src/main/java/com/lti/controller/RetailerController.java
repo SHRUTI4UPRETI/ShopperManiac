@@ -1,6 +1,8 @@
 package com.lti.controller;
 
+import java.util.ArrayList;
 import java.util.Base64;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailSender;
@@ -11,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.mail.MailException;
 
+import com.lti.dto.ChangeProductStockInRetailerUIDto;
 import com.lti.dto.DisplayCustomerDto;
+import com.lti.dto.DisplayProductsForRetailerDto;
 import com.lti.dto.DisplayRetailerDto;
 import com.lti.dto.LoginDto;
 import com.lti.dto.PlaceOrderDto;
@@ -23,6 +27,7 @@ import com.lti.dto.UpdateRetailerPasswordDto;
 import com.lti.dto.Status.StatusType;
 import com.lti.exception.RetailerServiceException;
 import com.lti.model.Customer;
+import com.lti.model.Product;
 import com.lti.model.Retailer;
 import com.lti.service.RetailerService;
 
@@ -107,6 +112,48 @@ public class RetailerController {
 	
 	return displayRetailerDto;	
 	
+	}
+	
+	@PostMapping("/displayproductsByRetailerId")
+	public List<DisplayProductsForRetailerDto> displayProductsByRetailerId(@RequestBody RetailerIdDto retailerId) {
+		
+		List<Product> products = retailerService.viewProductsOfRetailer(retailerId.getRetailerId());
+		
+		List<DisplayProductsForRetailerDto> productList = new ArrayList<>();
+		
+		
+		for(Product pd: products) {
+			DisplayProductsForRetailerDto dto = new DisplayProductsForRetailerDto();
+			dto.setProductId(pd.getProductId());
+			dto.setProductName(pd.getProductName());
+			dto.setProductQuantity(pd.getProductQuantity());
+			dto.setProductImagePath(pd.getProductImagePath());
+			
+			productList.add(dto);
+		}
+		
+		return productList;
+		
+	}
+	
+	@PostMapping("/changeProductStock")
+	public Status changeProductStockInInventory(@RequestBody ChangeProductStockInRetailerUIDto dto) {
+		
+		int i = retailerService.changeProductStockInInventory(dto.getProductId(), dto.getProductQuantity());
+		
+		Status status = new Status();
+		if(i>0) {
+			status.setMessage("Product Quantity Changed");
+			status.setStatus(Status.StatusType.SUCCESS);
+		}
+		
+		else {
+			status.setMessage("Error in changing product quantity");
+			status.setStatus(Status.StatusType.FAILURE);
+		}
+		
+		return status;
+		
 	}
 	
 }

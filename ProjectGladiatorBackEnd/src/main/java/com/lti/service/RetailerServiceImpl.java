@@ -1,6 +1,7 @@
 package com.lti.service;
 
 import java.util.Base64;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -8,7 +9,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.lti.exception.RetailerServiceException;
-
+import com.lti.model.Product;
 import com.lti.model.Retailer;
 import com.lti.repository.RetailerRepository;
 
@@ -62,6 +63,14 @@ public class RetailerServiceImpl implements RetailerService {
 		return retailerRepo.findRetailerById(retailerId);
      }
 	
+	@Override
+	public List<Product> viewProductsOfRetailer(int retailerId) {
+		return retailerRepo.viewProductsOfRetailer(retailerId);
+	}
 	
+	@Override
+	public int changeProductStockInInventory(int productId, int productQuantity) {
+		return retailerRepo.changeProductStockInInventory(productId, productQuantity);
+	}
 
 }

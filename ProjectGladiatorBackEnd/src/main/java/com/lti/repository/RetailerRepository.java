@@ -1,5 +1,8 @@
 package com.lti.repository;
 
+import java.util.List;
+
+import com.lti.model.Product;
 import com.lti.model.Retailer;
 
 public interface RetailerRepository {
@@ -13,6 +16,10 @@ public interface RetailerRepository {
 	void addNewRetailer(Retailer retailer);
 
 	int updateRetailerPassword(int retailerId, String retailerPassword);
+
+	List<Product> viewProductsOfRetailer(int retailerId);
+
+	int changeProductStockInInventory(int productId, int productQuantity);
 	
 
 }
