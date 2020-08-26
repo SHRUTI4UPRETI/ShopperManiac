@@ -203,5 +203,27 @@ public class ProductController {
 		return status;
 
 	}
+	
+	@PostMapping("/viewProductBySubCategory")
+	public List<SpecificProductDto> viewProductBySubCategory(@RequestBody ProductSubCategories subCategoryDto) {
+		//System.out.println(subCategoryDto.getProductSubCategories());
+		List<Product> products = productServ.viewProductBySubCategory(subCategoryDto.getProductSubCategories());
+
+		List<SpecificProductDto> Specificproducts = new ArrayList<>();
+		for (Product p : products) {
+			SpecificProductDto specificProduct = new SpecificProductDto();
+			specificProduct.setProductName(p.getProductName());
+			specificProduct.setProductBrandName(p.getProductBrandName());
+			specificProduct.setProductCategory(p.getProductCategory());
+			specificProduct.setProductPrice(p.getProductPrice());
+			specificProduct.setProductDescription(p.getProductDescription());
+			specificProduct.setProductImagePath(p.getProductImagePath());
+			specificProduct.setProductSubCategory(p.getProductSubCategory());
+			specificProduct.setProductId(p.getProductId());
+			Specificproducts.add(specificProduct);
+		}
+
+		return Specificproducts;
+	}
 
 }

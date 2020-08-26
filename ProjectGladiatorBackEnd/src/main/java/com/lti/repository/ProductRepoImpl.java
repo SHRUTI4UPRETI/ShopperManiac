@@ -113,4 +113,16 @@ public class ProductRepoImpl implements ProductRepo {
 		List<Product> products=query.getResultList();
 		return products;
 	}
+	
+	@Override
+	public List<Product> viewProductBySubCategory(String productSubCategory) {
+		String sql = "select product from Product product where product.productSubCategory=:sc and product.isProductApproved=:status";
+		TypedQuery<Product> qry = em.createQuery(sql, Product.class);
+		qry.setParameter("sc", productSubCategory);
+		qry.setParameter("status", true);
+		List<Product> products = qry.getResultList();
+       // System.out.println(productSubCategory);
+		return products;
+	}
+// product.productSubCategory=:sc and
 }

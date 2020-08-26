@@ -24,4 +24,6 @@ public interface ProductService {
     int updateProductImage(int productId, String imagePath);
 
 	List<String> productSubCategoryByCategory(String productCategory);
+	
+    List<Product> viewProductBySubCategory(String productSubCategory);
 }
