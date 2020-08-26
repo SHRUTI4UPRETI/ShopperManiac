@@ -82,15 +82,6 @@ public class ProductRepoImpl implements ProductRepo {
 		return products;
 	}
 
-	  
-	/*
-	 * @Override public List<Product> viewProductSubCategoryByCategory(String
-	 * productCategory){ String sql =
-	 * "select DISTINCT product.subCategory  from Product product where product.productCategory=:ct"
-	 * ; //Query qry = em.createQuery(sql); TypedQuery<Product> qry =
-	 * em.createQuery(sql, Product.class); qry.setParameter("ct", productCategory);
-	 * List<Product> subCategory = qry.getResultList(); return subCategory; }
-	 */
 	
 	@Override
 	@Transactional

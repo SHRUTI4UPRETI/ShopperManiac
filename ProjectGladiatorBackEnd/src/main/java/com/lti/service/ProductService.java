@@ -20,9 +20,6 @@ public interface ProductService {
 	
 	public List<Product> searchProduct(String searchValue);
 
-    // List<Product> viewProductSubCategoryByCategory(String productCategory);
-
-
 	int addProduct(Product product, int retailerId);
 
 	int updateProductImage(int productId, String imagePath);
