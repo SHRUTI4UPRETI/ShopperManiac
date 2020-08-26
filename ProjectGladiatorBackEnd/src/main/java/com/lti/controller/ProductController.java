@@ -157,7 +157,7 @@ public class ProductController {
 		product.setProductDescription(productAddDto.getProductDescription());
 		product.setProductSubCategory(productAddDto.getProductSubCategory());
 		product.setProductQuantity(productAddDto.getProductQuantity());
-		product.setProductApproved(true); // by default false
+		product.setProductApproved(false); // by default false
 		int pid = productServ.addProduct(product, productAddDto.getRetailerId());
 		productIdDto.setProductId(pid);
 		return productIdDto;
