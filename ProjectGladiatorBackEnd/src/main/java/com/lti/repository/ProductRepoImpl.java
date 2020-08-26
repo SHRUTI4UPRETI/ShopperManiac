@@ -91,5 +91,15 @@ public class ProductRepoImpl implements ProductRepo {
 		return product1.getProductId();
 		
 	}
+	
+	@Override
+	@Transactional
+	public int updateProductImage(int productId, String imagePath) {
+		Product product = em.find(Product.class, productId);
+		String extention = imagePath.replace(".jpg", "");;
+		product.setProductImagePath(extention);
+		em.merge(product);
+		return 1;
+	}
 
 }

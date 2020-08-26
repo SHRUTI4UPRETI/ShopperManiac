@@ -1,9 +1,12 @@
 package com.lti.controller;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,9 +19,14 @@ import com.lti.dto.ProductAddDto;
 import com.lti.dto.ProductCategoryDto;
 import com.lti.dto.ProductDto;
 import com.lti.dto.ProductIdDto;
+import com.lti.dto.ProductImageUploadDto;
 import com.lti.dto.SearchProductDto;
 import com.lti.dto.SpecificProductDto;
+import com.lti.dto.Status;
+import com.lti.dto.Status.StatusType;
+import com.lti.model.Customer;
 import com.lti.model.Product;
+import com.lti.model.Retailer;
 import com.lti.service.ProductService;
 
 @RestController
@@ -127,11 +135,42 @@ public class ProductController {
 		product.setProductDescription(productAddDto.getProductDescription());
 		product.setProductSubCategory(productAddDto.getProductSubCategory());
 		product.setProductQuantity(productAddDto.getProductQuantity());
-		product.setProductApproved(true);                // by default false
+		product.setProductApproved(true); // by default false
 		int pid = productServ.addProduct(product, productAddDto.getRetailerId());
 		productIdDto.setProductId(pid);
 		return productIdDto;
 	}
-	
+
+	@PostMapping("/productImageUpload")
+	public Status upload(ProductImageUploadDto productImageUploadDto) {
+		String imageUploadLocation = "D:/My Study Material/LTI/Virtual Training/Project Gladiator/Online Shopping Web App/Front end Angular/JVSD-OnlineShopping-Angular/src/assets/";
+		String fileName = productImageUploadDto.getProductImage().getOriginalFilename();
+		String targetFile = imageUploadLocation + fileName;
+		try {
+			FileCopyUtils.copy(productImageUploadDto.getProductImage().getInputStream(),
+					new FileOutputStream(targetFile));
+		} catch (IOException e) {
+			e.printStackTrace();
+			Status status = new Status();
+			status.setStatus(StatusType.FAILURE);
+			status.setMessage(e.getMessage());
+			return status;
+		}
+
+		int i = productServ.updateProductImage(productImageUploadDto.getProductId(), fileName);
+		Status status = new Status();
+		if (i>0) {
+			
+			status.setStatus(StatusType.SUCCESS);
+			status.setMessage("Uploaded!");
+			
+		}else {
+			status.setStatus(StatusType.FAILURE);
+			status.setMessage("Not Uploaded");
+		}
+		return status;
+		
+
+	}
 
 }

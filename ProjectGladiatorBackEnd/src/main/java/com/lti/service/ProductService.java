@@ -20,4 +20,6 @@ public interface ProductService {
 	public List<Product> searchProduct(String searchValue);
 
 	int addProduct(Product product, int retailerId);
+
+	int updateProductImage(int productId, String imagePath);
 }

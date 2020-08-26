@@ -82,11 +82,15 @@ public class ProductServiceImpl implements ProductService {
 
 		return products;
 	}
-	
-	
+
 	@Override
 	public int addProduct(Product product, int retailerId) {
 		return productRepo.addProduct(product, retailerId);
-		
+
+	}
+
+	@Override
+	public int updateProductImage(int productId, String imagePath) {
+		return productRepo.updateProductImage(productId, imagePath);
 	}
 }
