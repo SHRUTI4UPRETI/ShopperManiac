@@ -13,5 +13,6 @@ public interface RetailerRepository {
 	void addNewRetailer(Retailer retailer);
 
 	int updateRetailerPassword(int retailerId, String retailerPassword);
+	
 
 }

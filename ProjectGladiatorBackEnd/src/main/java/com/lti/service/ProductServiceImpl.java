@@ -113,4 +113,19 @@ public class ProductServiceImpl implements ProductService {
 		}
 		return productSubCategories;
 	}
+	
+	@Override
+	public List<Product> viewProductBySubCategory(String productSubCategory) {
+
+		List<Product> products = new ArrayList<>();
+		products = productRepo.viewProductBySubCategory(productSubCategory);
+		for (Product p : products) {
+			String imageName = p.getProductImagePath();
+			imageName = "assets/" + imageName + ".jpg";
+			p.setProductImagePath(imageName);
+		}
+//System.out.println(productSubCategory);
+		return products;
+	}
+
 }
