@@ -143,7 +143,7 @@ public class ProductController {
 
 	@PostMapping("/productImageUpload")
 	public Status upload(ProductImageUploadDto productImageUploadDto) {
-		String imageUploadLocation = "D:/My Study Material/LTI/Virtual Training/Project Gladiator/Online Shopping Web App/Front end Angular/JVSD-OnlineShopping-Angular/src/assets/";
+		//String imageUploadLocation = "D:/My Study Material/LTI/Virtual Training/Project Gladiator/Online Shopping Web App/Front end Angular/JVSD-OnlineShopping-Angular/src/assets/";    //jai path
 		String fileName = productImageUploadDto.getProductImage().getOriginalFilename();
 		String targetFile = imageUploadLocation + fileName;
 		try {
