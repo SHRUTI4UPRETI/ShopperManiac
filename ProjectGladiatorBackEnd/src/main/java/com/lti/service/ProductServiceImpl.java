@@ -83,11 +83,11 @@ public class ProductServiceImpl implements ProductService {
 
 		return products;
 	}
-	 @Override
-	  public List<Product> viewProductSubCategoryByCategory(String productCategory){
-		  return productRepo.viewProductSubCategoryByCategory(productCategory);
-		  } 
-
+	/*
+	 * @Override public List<Product> viewProductSubCategoryByCategory(String
+	 * productCategory){ return
+	 * productRepo.viewProductSubCategoryByCategory(productCategory); }
+	 */
 
 	@Override
 	public int addProduct(Product product, int retailerId) {

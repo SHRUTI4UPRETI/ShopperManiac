@@ -127,22 +127,7 @@ public class ProductController {
 		}
 		return productDto;
 	}
-	
-	  @PostMapping("/SubCategory")
-	  public List<SubCategoryDto> viewProductSubCategoryByCategory(@RequestBody ProductCategoryDto productCategory)
-	  {
-		 List< Product> products = productServ.viewProductSubCategoryByCategory(productCategory.getProductCategory());
-		  List<SubCategoryDto> subCategoryDtos = new ArrayList<>();
-		  for(Product product: products) {
-			  SubCategoryDto subCategoryDto = new SubCategoryDto();
-			  subCategoryDto.setSubCategory(product.getProductSubCategory());
-			  subCategoryDtos.add(subCategoryDto);
-		  }
-	    return subCategoryDtos;
-	    
-	  }
 	 
-
 
 	@PostMapping("/addProduct")
 	public ProductIdDto addProduct(@RequestBody ProductAddDto productAddDto) {
