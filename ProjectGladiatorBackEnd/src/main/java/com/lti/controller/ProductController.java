@@ -168,10 +168,9 @@ public class ProductController {
 		// String imageUploadLocation = "D:/My Study Material/LTI/Virtual
 		// Training/Project Gladiator/Online Shopping Web App/Front end
 		// Angular/JVSD-OnlineShopping-Angular/src/assets/"; //jai path
-		String imageUploadLocation = "D:/Docs/LTI/VT/Project Gladiator/JVSD-OnlineShopping-Angular/OnlineShopping/src/assets/"; // Vishal
+		//String imageUploadLocation = "D:/Docs/LTI/VT/Project Gladiator/JVSD-OnlineShopping-Angular/OnlineShopping/src/assets/"; // Vishal
 																																// Path
-		// String
-		// imageUploadLocation="D:/angular846/JVSD-OnlineShopping-Angular/OnlineShopping/src/assets/"
+		 String imageUploadLocation="D:/angular846/JVSD-OnlineShopping-Angular/OnlineShopping/src/assets/";
 		// //divyansh path
 		// String
 		// imageUploadLocation="E:/ProjectGladiator/JVSD-OnlineShopping-Angular/OnlineShopping/src/assets/"
