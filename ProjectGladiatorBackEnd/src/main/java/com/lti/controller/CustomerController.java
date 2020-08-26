@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lti.dto.ChangeCartQuantityDto;
+import com.lti.dto.CustomerEmailDto;
 import com.lti.dto.DisplayCustomerDto;
 import com.lti.dto.ItemDto;
 import com.lti.dto.ItemsInCartDto;
@@ -28,6 +29,7 @@ import com.lti.dto.SpecificProductDto;
 import com.lti.dto.Status;
 import com.lti.dto.Status.StatusType;
 import com.lti.dto.UpdateCustomerPasswordDto;
+import com.lti.dto.VerifyOTPDto;
 import com.lti.dto.loginStatus;
 import com.lti.exception.CustomerServiceException;
 import com.lti.model.Customer;
@@ -45,9 +47,13 @@ public class CustomerController {
 
 	@Autowired
 	private MailSender mailSender;
-	
+
 	@Autowired
 	private CustomerService customerServ;
+	
+	int OTP;
+	int CID;
+	
 
 	@PostMapping("/customerRegister")
 	public Status register(@RequestBody Customer customer) {
@@ -56,15 +62,14 @@ public class CustomerController {
 			customerServ.register(customer);
 			status.setStatus(StatusType.SUCCESS);
 			status.setMessage("Registration Successful");
-			
 
 			SimpleMailMessage message = new SimpleMailMessage();
 			message.setFrom("ShoppingManiac4@outlook.com");
-			message.setTo(customer.getCustomerEmail());       /* retailer.getRetailerEmail() */ 
+			message.setTo(customer.getCustomerEmail()); /* retailer.getRetailerEmail() */
 			message.setSubject("Thank You for registration");
-			message.setText("Thank you "+customer.getCustomerName()+" for registration. \n Have a nice Day :)");
+			message.setText("Thank you " + customer.getCustomerName() + " for registration. \n Have a nice Day :)");
 			mailSender.send(message);
-			
+
 		} catch (CustomerServiceException e) {
 			status.setStatus(StatusType.FAILURE);
 			status.setMessage(e.getMessage());
@@ -81,7 +86,6 @@ public class CustomerController {
 		loginStatus loginStatus = new loginStatus();
 
 		Customer customer = customerServ.loginCustomer(loginDto.getEmail(), loginDto.getPassword());
-
 		if (customer != null) {
 
 			loginStatus.setCustomerId(customer.getCustomerId());
@@ -130,6 +134,51 @@ public class CustomerController {
 		return status;
 	}
 
+	@PostMapping("/sendOtp")
+	public Status sendOtp(@RequestBody CustomerEmailDto customerEmailDto) {
+		int i = customerServ.isValidCustomerEmail(customerEmailDto.getCustomerEmail());
+		Status status = new Status();
+		if (i > 0) {
+			status.setStatus(StatusType.SUCCESS);
+			status.setMessage("OTP Sent!");
+
+			int otp = (int) (Math.random() * 9000) + 1000;
+			
+			OTP=otp;
+			CID=i;
+			
+			SimpleMailMessage message = new SimpleMailMessage();
+			message.setFrom("ShoppingManiac4@outlook.com");
+			message.setTo(customerEmailDto.getCustomerEmail()); /* retailer.getRetailerEmail() */
+			message.setSubject("OTP for Password Reset");
+			message.setText("Your OTP for Resetting the password is: " + otp);
+			mailSender.send(message);
+		} 
+		else {
+			status.setStatus(StatusType.FAILURE);
+			status.setMessage("Invalid Email!");
+		}
+		return status;
+	}
+
+	@PostMapping("/verifyOtp")
+	public Status verifyOtp(@RequestBody  VerifyOTPDto verifyOtpDto) {
+		Status status = new Status();
+		if(OTP==verifyOtpDto.getOtp())
+		{
+			int i=customerServ.updateCustomerPassword(CID, verifyOtpDto.getCustomerPassword());
+			status.setStatus(StatusType.SUCCESS);
+			status.setMessage("Password successfully changed!");
+		}
+		else
+		{
+			status.setStatus(StatusType.FAILURE);
+			status.setMessage("Invalid OTP");
+		}
+		return status;
+	}
+	
+	
 	@PostMapping("/placeCustomerOrder")
 	public Status placeCustomerOrder(@RequestBody PlaceOrderDto placeOrder) {
 		Status status = new Status();
@@ -139,15 +188,15 @@ public class CustomerController {
 		if (i != null) {
 			status.setMessage("Order Placed");
 			status.setStatus(StatusType.SUCCESS);
-			
 
 			SimpleMailMessage message = new SimpleMailMessage();
 			message.setFrom("ShoppingManiac4@outlook.com");
-			message.setTo(i);       /* customer.getRetailerEmail() */ 
+			message.setTo(i); /* customer.getRetailerEmail() */
 			message.setSubject("Order Placed Successfully");
-			message.setText("Your Order have been placed. \n Order placed on :"+order.getOrderDate()+"\n Deliver within 7 working Day. \n Happy Shopping :)");
+			message.setText("Your Order have been placed. \n Order placed on :" + order.getOrderDate()
+					+ "\n Deliver within 7 working Day. \n Happy Shopping :)");
 			mailSender.send(message);
-			
+
 		} else {
 			status.setMessage("Order Not placed");
 			status.setStatus(StatusType.FAILURE);
@@ -176,9 +225,9 @@ public class CustomerController {
 
 		return returnItems;
 	}
-	
+
 	@PostMapping("/viewOrdersByCustomer")
-	public List<OrderDisplayDto> displayOrderForCustomer(@RequestBody PlaceOrderDto placeOrderDto){
+	public List<OrderDisplayDto> displayOrderForCustomer(@RequestBody PlaceOrderDto placeOrderDto) {
 		List<Order> orders = customerServ.displayOrderForCustomer(placeOrderDto.getCustomerId());
 		List<OrderDisplayDto> allOrders = new ArrayList<>();
 		for (Order o : orders) {
@@ -186,78 +235,75 @@ public class CustomerController {
 			od.setOrderId(o.getOrderId());
 			od.setOrderDate(o.getOrderDate());
 			od.setOrderTotalPrice(o.getOrderTotalPrice());
-			
+
 			allOrders.add(od);
-	}
-	
+		}
+
 		return allOrders;
 
-   }
-	
+	}
+
 	@PostMapping("/viewProductsByOrder")
-	public List<ProductDetailsDto> displayProductsByOrderId(@RequestBody OrderDto orderDto){
+	public List<ProductDetailsDto> displayProductsByOrderId(@RequestBody OrderDto orderDto) {
 		List<Items> items = customerServ.displayProductByOrderId(orderDto.getOrderId());
 		List<ProductDetailsDto> allPurchasedProducts = new ArrayList<>();
-		for (Items i: items) {
+		for (Items i : items) {
 			ProductDetailsDto pdo = new ProductDetailsDto();
 			pdo.setItemName(i.getItemName());
 			pdo.setItemPrice(i.getItemPrice());
 			pdo.setItemQuantity(i.getItemQuantity());
 			pdo.setItemTotalPrice(i.getItemPrice());
-			
+
 			allPurchasedProducts.add(pdo);
 		}
-		
+
 		return allPurchasedProducts;
 	}
-	
 
 	@PostMapping("/updateCustomerPassword")
 	public Status updateCustomerPassword(@RequestBody UpdateCustomerPasswordDto updateDto) {
 		Status status = new Status();
 		int i = customerServ.updateCustomerPassword(updateDto.getCustomerId(), updateDto.getCustomerPassword());
-		if (i>0) {
+		if (i > 0) {
 			status.setMessage("Password Updated");
 			status.setStatus(StatusType.SUCCESS);
-			
-		}else {
+
+		} else {
 			status.setMessage("Password update Failed");
 			status.setStatus(StatusType.FAILURE);
 		}
 		return status;
 	}
-	
+
 	@PostMapping("/dislayCustomerDetails")
 	public DisplayCustomerDto displayCustomerDetails(@RequestBody PlaceOrderDto customerId) {
-		
-	Customer customer = customerServ.displayCustomerDetails(customerId.getCustomerId());
-    
-	DisplayCustomerDto displayCustomerDto = new DisplayCustomerDto();
-	
-	displayCustomerDto.setCustomerName(customer.getCustomerName());
-	displayCustomerDto.setCustomerEmail(customer.getCustomerEmail());
-	displayCustomerDto.setCustomerAddress(customer.getCustomerAddress());
-	displayCustomerDto.setCustomerMobile(customer.getCustomerMobile());
-	
-	
-	return displayCustomerDto;	
-	
+
+		Customer customer = customerServ.displayCustomerDetails(customerId.getCustomerId());
+
+		DisplayCustomerDto displayCustomerDto = new DisplayCustomerDto();
+
+		displayCustomerDto.setCustomerName(customer.getCustomerName());
+		displayCustomerDto.setCustomerEmail(customer.getCustomerEmail());
+		displayCustomerDto.setCustomerAddress(customer.getCustomerAddress());
+		displayCustomerDto.setCustomerMobile(customer.getCustomerMobile());
+
+		return displayCustomerDto;
+
 	}
-	
+
 	@PostMapping("/removeItemInCart")
 	public Status removeItemFromCart(@RequestBody RemoveCartDto rCartDto) {
 		int i = customerServ.removeItemFromCart(rCartDto.getCustomerId(), rCartDto.getItemId());
 		Status status = new Status();
-		if(i>0) {
+		if (i > 0) {
 			status.setMessage("Item removed");
 			status.setStatus(StatusType.SUCCESS);
-		}
-		else {
+		} else {
 			status.setMessage("Error in deleting item");
 			status.setStatus(StatusType.FAILURE);
 		}
-		
+
 		return status;
 	}
-	
+
 }

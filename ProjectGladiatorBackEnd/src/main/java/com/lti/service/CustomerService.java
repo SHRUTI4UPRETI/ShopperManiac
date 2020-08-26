@@ -31,5 +31,7 @@ public interface CustomerService {
 
 	int removeItemFromCart(int customerId, int itemId);
 
+	int isValidCustomerEmail(String customerEmail);
+
 	
 }

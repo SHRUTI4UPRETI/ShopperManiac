@@ -31,6 +31,11 @@ public class CustomerServiceImpl implements CustomerService {
 		else
 			throw new CustomerServiceException("Customer Already Registered");
 	}
+	
+	@Override
+	public int isValidCustomerEmail(String customerEmail) {
+		return customerRepo.isValidCustomerEmail(customerEmail);
+	}
 
 	@Override
 	public Customer loginCustomer(String customerEmail, String customerPassword) {
