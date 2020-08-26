@@ -1,5 +1,6 @@
 package com.lti.service;
 
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 
@@ -65,7 +66,15 @@ public class RetailerServiceImpl implements RetailerService {
 	
 	@Override
 	public List<Product> viewProductsOfRetailer(int retailerId) {
-		return retailerRepo.viewProductsOfRetailer(retailerId);
+		List<Product> products = new ArrayList<>();
+		products = retailerRepo.viewProductsOfRetailer(retailerId);
+		for (Product p : products) {
+			String imageName = p.getProductImagePath();
+			imageName = "assets/" + imageName + ".jpg";
+			p.setProductImagePath(imageName);
+		}
+		return products;
+		
 	}
 	
 	@Override

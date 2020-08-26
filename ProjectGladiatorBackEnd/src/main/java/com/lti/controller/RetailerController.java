@@ -114,7 +114,7 @@ public class RetailerController {
 	
 	}
 	
-	@PostMapping("/displayproductsByRetailerId")
+	@PostMapping("/displayProductsByRetailerId")
 	public List<DisplayProductsForRetailerDto> displayProductsByRetailerId(@RequestBody RetailerIdDto retailerId) {
 		
 		List<Product> products = retailerService.viewProductsOfRetailer(retailerId.getRetailerId());
