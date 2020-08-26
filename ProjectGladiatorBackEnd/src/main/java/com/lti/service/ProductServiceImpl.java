@@ -1,7 +1,9 @@
 package com.lti.service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -92,5 +94,22 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public int updateProductImage(int productId, String imagePath) {
 		return productRepo.updateProductImage(productId, imagePath);
+	}
+
+	@Override
+	public List<String> productSubCategoryByCategory(String productCategory) {
+		List<Product> products = productRepo.productSubCategoryByCategory(productCategory);
+
+		Set<String> productCatSet = new HashSet<>();
+
+		for (Product p : products) {
+			productCatSet.add(p.getProductSubCategory());
+		}
+		List<String> productSubCategories = new ArrayList<String>();
+
+		for (String s : productCatSet) {
+			productSubCategories.add(s);
+		}
+		return productSubCategories;
 	}
 }

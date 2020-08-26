@@ -22,4 +22,6 @@ public interface ProductService {
 	int addProduct(Product product, int retailerId);
 
 	int updateProductImage(int productId, String imagePath);
+
+	List<String> productSubCategoryByCategory(String productCategory);
 }
