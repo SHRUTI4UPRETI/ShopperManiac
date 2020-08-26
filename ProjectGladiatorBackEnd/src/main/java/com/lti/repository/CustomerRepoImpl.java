@@ -65,6 +65,20 @@ public class CustomerRepoImpl implements CustomerRepository {
 	}
 
 	@Override
+	public int isValidCustomerEmail(String customerEmail) {
+		String sql = "select cust from Customer cust";
+		Query qry = em.createQuery(sql);
+
+		List<Customer> users = qry.getResultList();
+
+		for (Customer u : users) {
+			if (u.getCustomerEmail().equals(customerEmail))
+				return u.getCustomerId();
+		}
+		return 0;
+	}
+	
+	@Override
 	@Transactional
 	public int addCart(List<Cart> carts, int customerId) {
 		Customer customer = em.find(Customer.class, customerId);
