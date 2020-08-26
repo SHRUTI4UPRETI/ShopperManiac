@@ -1,5 +1,6 @@
 package com.lti.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,17 +30,33 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public List<Product> showProductsToApprove() {
 
-		return adminRepo.showProductsToApprove();
+		List<Product> products = new ArrayList<>();
+		products = adminRepo.showProductsToApprove();
+		for (Product p : products) {
+			String imageName = p.getProductImagePath();
+			imageName = "assets/" + imageName + ".jpg";
+			p.setProductImagePath(imageName);
+		}
+		return products;
 	}
-	
+
 	@Override
 	public List<Product> approvedProducts() {
 
-		return adminRepo.approvedProducts();
+		List<Product> products = new ArrayList<>();
+		products = adminRepo.approvedProducts();
+		for (Product p : products) {
+			String imageName = p.getProductImagePath();
+			imageName = "assets/" + imageName + ".jpg";
+			p.setProductImagePath(imageName);
+		}
+		return products;
+
 	}
 
 	@Override
 	public int productApprove(int productId) {
 		return adminRepo.productApprove(productId);
+
 	}
 }
