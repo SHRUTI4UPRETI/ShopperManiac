@@ -29,5 +29,7 @@ public interface CustomerService {
 
 	int updateCustomerPassword(int customerId, String customerPassword);
 
+	int removeItemFromCart(int customerId, int itemId);
+
 	
 }

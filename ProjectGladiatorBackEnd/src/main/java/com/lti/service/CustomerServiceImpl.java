@@ -90,8 +90,7 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 	
 	@Override
-
-	public Customer displayCustomerDetails(int customerId) {
+    public Customer displayCustomerDetails(int customerId) {
 		return customerRepo.findCustomerbyCustomerId(customerId);
 	}
 
@@ -99,6 +98,10 @@ public class CustomerServiceImpl implements CustomerService {
 		String encodedPassword = Base64.getEncoder().encodeToString(customerPassword.getBytes());
 		return customerRepo.updateCustomerPassword(customerId, encodedPassword);
 		
+	}
+	@Override
+	public int removeItemFromCart(int customerId, int itemId) {
+		return customerRepo.removeItemFromCart(customerId, itemId);
 	}
 
 }
