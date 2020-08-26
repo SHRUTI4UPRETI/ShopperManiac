@@ -8,5 +8,11 @@ public class ProductIdDto {
 		return productId;
 	}
 
+	public void setProductId(int productId) {
+		this.productId = productId;
+	}
+
+	
+
 	
 }

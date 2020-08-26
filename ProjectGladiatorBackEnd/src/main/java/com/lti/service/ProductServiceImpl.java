@@ -86,6 +86,17 @@ public class ProductServiceImpl implements ProductService {
 	 @Override
 	  public List<Product> viewProductSubCategoryByCategory(String productCategory){
 		  return productRepo.viewProductSubCategoryByCategory(productCategory);
-		  }
-	 
+		  } 
+
+
+	@Override
+	public int addProduct(Product product, int retailerId) {
+		return productRepo.addProduct(product, retailerId);
+
+	}
+
+	@Override
+	public int updateProductImage(int productId, String imagePath) {
+		return productRepo.updateProductImage(productId, imagePath);
+	}
 }

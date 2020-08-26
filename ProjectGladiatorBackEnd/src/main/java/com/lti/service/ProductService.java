@@ -19,5 +19,12 @@ public interface ProductService {
 	public int checkStockQuantity(int itemId);
 	
 	public List<Product> searchProduct(String searchValue);
+<<<<<<< HEAD
      List<Product> viewProductSubCategoryByCategory(String productCategory);
+=======
+
+	int addProduct(Product product, int retailerId);
+
+	int updateProductImage(int productId, String imagePath);
+>>>>>>> branch 'master' of https://github.com/Thundrol/ProjectGladiator-OnlineShopping
 }

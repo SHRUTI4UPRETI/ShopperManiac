@@ -8,7 +8,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.lti.exception.RetailerServiceException;
-import com.lti.model.Customer;
+
 import com.lti.model.Retailer;
 import com.lti.repository.RetailerRepository;
 
@@ -22,11 +22,11 @@ public class RetailerServiceImpl implements RetailerService {
 	public void register(Retailer retailer) {
 		if (!retailerRepo.isRetailerPresent(retailer.getRetailerEmail())) {
 			String pass = retailer.getRetailerPassword();
-			String encodedPassword = Base64.getEncoder().encodeToString(pass.getBytes()); 
+			String encodedPassword = Base64.getEncoder().encodeToString(pass.getBytes());
 			retailer.setRetailerPassword(encodedPassword);
 			retailerRepo.addNewRetailer(retailer);
 		}
-			
+
 		else
 			throw new RetailerServiceException("Retailer Already Registered");
 
@@ -38,7 +38,7 @@ public class RetailerServiceImpl implements RetailerService {
 			if (!retailerRepo.isRetailerPresent(retailerEmail)) {
 				throw new RetailerServiceException("Your Email is not registered with us please register");
 			}
-			//add encoder code
+			// add encoder code
 			String encodedPassword = Base64.getEncoder().encodeToString(retailerPassword.getBytes());
 			int retailerId = retailerRepo.findRetailerbyEmailPassword(retailerEmail, encodedPassword);
 			Retailer retailer = retailerRepo.findRetailerById(retailerId);
@@ -48,10 +48,11 @@ public class RetailerServiceImpl implements RetailerService {
 		}
 
 	}
-	
+
 	@Override
 	public int updateRetailerPassword(int retailerId, String retailerPassword) {
 		String encodedPassword = Base64.getEncoder().encodeToString(retailerPassword.getBytes());
+
 		return retailerRepo.updateRetailerPassword(retailerId, encodedPassword);	
 		}
 	
@@ -59,6 +60,8 @@ public class RetailerServiceImpl implements RetailerService {
 
 	public Retailer displayRetailerDetails(int retailerId) {
 		return retailerRepo.findRetailerById(retailerId);
-	}
+     }
 	
+	
+
 }

@@ -10,14 +10,18 @@ public interface ProductRepo {
 	List<Product> latestFiveProducts();
 
 	List<Product> viewAllProducts();
-	
+
 	Product viewSpecificProduct(int productId);
-	
+
 	List<Product> viewProductByCategory(String productCategory);
-	
+
 	int checkStockQuantity(int itemId);
-	
-	List<Product>searchProduct(String searchValue);
+
+	List<Product> searchProduct(String searchValue);
+
+	int addProduct(Product product, int retailerId);
+
+	int updateProductImage(int productId, String imagePath);
 
 	List<String> viewProductSubCategoryByCategory(String productCategory);
 

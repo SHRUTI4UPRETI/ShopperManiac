@@ -7,6 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Repository;
 
@@ -14,6 +15,7 @@ import com.lti.dto.ProductDto;
 import com.lti.model.Customer;
 import com.lti.model.Items;
 import com.lti.model.Product;
+import com.lti.model.Retailer;
 
 @Repository
 public class ProductRepoImpl implements ProductRepo {
@@ -79,16 +81,36 @@ public class ProductRepoImpl implements ProductRepo {
 		products = query.getResultList();
 		return products;
 	}
+
 	  
-	  @Override 
-	  public List<String> viewProductSubCategoryByCategory(String productCategory){
-		 String sql = "select DISTINCT product.subCategory  from Product product where product.productCategory=:ct";
-			//Query qry = em.createQuery(sql);
-	    TypedQuery<Product> qry = em.createQuery(sql, Product.class);
-	     qry.setParameter("ct", productCategory); 
-	     List<String> subCategory = qry.getResultList();
-	     return subCategory;
-	  }
+	/*
+	 * @Override public List<Product> viewProductSubCategoryByCategory(String
+	 * productCategory){ String sql =
+	 * "select DISTINCT product.subCategory  from Product product where product.productCategory=:ct"
+	 * ; //Query qry = em.createQuery(sql); TypedQuery<Product> qry =
+	 * em.createQuery(sql, Product.class); qry.setParameter("ct", productCategory);
+	 * List<Product> subCategory = qry.getResultList(); return subCategory; }
+	 */
 	
+	@Override
+	@Transactional
+	public int addProduct(Product product, int retailerId) {
+		System.out.println(product);
+		Retailer retailer =em.find(Retailer.class, retailerId);
+		product.setRetailer(retailer);
+		Product product1 = em.merge(product);
+		return product1.getProductId();
+		
+	}
 	
+	@Override
+	@Transactional
+	public int updateProductImage(int productId, String imagePath) {
+		Product product = em.find(Product.class, productId);
+		String extention = imagePath.replace(".jpg", "");;
+		product.setProductImagePath(extention);
+		em.merge(product);
+		return 1;
+	}
+
 }
