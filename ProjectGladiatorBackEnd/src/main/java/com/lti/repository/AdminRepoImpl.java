@@ -5,10 +5,13 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
+import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Repository;
 
 import com.lti.model.Admin;
+import com.lti.model.Product;
 
 @Repository
 public class AdminRepoImpl implements AdminRepo {
@@ -37,4 +40,32 @@ public class AdminRepoImpl implements AdminRepo {
 		return em.find(Admin.class, adminEmail);
 	}
 
+	@Override
+	public List<Product> showProductsToApprove() {
+		String sql = "select product from Product product where product.isProductApproved=:status";
+		TypedQuery<Product> query = em.createQuery(sql, Product.class);
+		query.setParameter("status", false);
+
+		List<Product> products = query.getResultList();
+		return products;
+	}
+
+	@Override
+	public List<Product> approvedProducts() {
+		String sql = "select product from Product product where product.isProductApproved=:status";
+		TypedQuery<Product> query = em.createQuery(sql, Product.class);
+		query.setParameter("status", true);
+
+		List<Product> products = query.getResultList();
+		return products;
+	}
+	
+	@Override
+	@Transactional
+	public int productApprove(int productId) {
+		Product product = em.find(Product.class, productId);
+		product.setProductApproved(true);
+		em.merge(product);
+		return 1;
+	}
 }
