@@ -36,7 +36,6 @@ public class CustomerRepoImpl implements CustomerRepository {
 		cart.setCartStatus(true);
 		carts.add(cart);
 		addCart(carts, uId);
-		/* return uId; */
 
 	}
 
@@ -77,7 +76,7 @@ public class CustomerRepoImpl implements CustomerRepository {
 		}
 		return 0;
 	}
-	
+
 	@Override
 	@Transactional
 	public int addCart(List<Cart> carts, int customerId) {
@@ -176,7 +175,6 @@ public class CustomerRepoImpl implements CustomerRepository {
 		}
 
 		int cid = cart.getCustomer().getCustomerId();
-		// cart.setOrder(order);
 		order.setCart(cart);
 		order.setCustomer(customer);
 
@@ -200,7 +198,6 @@ public class CustomerRepoImpl implements CustomerRepository {
 		return customer.getCustomerEmail();
 	}
 
-
 	@Override
 	public Customer findCustomerbyCustomerId(int customerId) {
 		Customer customer = em.find(Customer.class, customerId);
@@ -216,7 +213,6 @@ public class CustomerRepoImpl implements CustomerRepository {
 	@Override
 	@Transactional
 	public int changeQuantityInCart(int customerId, int itemId, int itemQuantity) {
-		// System.out.println("hello2");
 		String sql = "select c from Cart c where c.customer.customerId=:custId and c.cartStatus=1";
 		TypedQuery<Cart> query = em.createQuery(sql, Cart.class);
 		query.setParameter("custId", customerId);
@@ -225,12 +221,6 @@ public class CustomerRepoImpl implements CustomerRepository {
 
 		List<Items> items = new ArrayList<Items>();
 
-		/*
-		 * String sql1 =
-		 * "select i from Items i where i.cart.cartId=:cartId and i.product.productId=:pId"
-		 * ; TypedQuery<Items> query1 = em.createQuery(sql1, Items.class);
-		 * query1.setParameter("cartId", cartId); query1.setParameter("pId", productId);
-		 */
 		Items item = em.find(Items.class, itemId);
 		cart.setCartQuantity(cart.getCartQuantity() - item.getItemQuantity() + itemQuantity);
 		item.setItemQuantity(itemQuantity);
@@ -275,23 +265,6 @@ public class CustomerRepoImpl implements CustomerRepository {
 
 	@Override
 	public List<Items> displayProductByOrderId(int orderId) {
-		// String sql = "select ti from Items ti where ti.cart.cartId=(select
-		// tc.cartId from Cart tc where tc.customer.customerId=:cid)";
-		// String sql="select it from Items it where it.cart.cartId=(select
-		// od.cart.cartId from Order od where od.orderId=:id)";
-		// String sql="select od,od.customer.customerId from Order od where
-		// od.orderId=:id";
-		/*
-		 * String
-		 * sql="select od, ct, it, pd from Order od join Cart ct on od.cart.cartId=ct.cartId"
-		 * +
-		 * " join Items it on ct.cartId=it.cart.cartId join Product pd on it.product.productId=pd.productId "
-		 * + "where orderId=:id";
-		 */
-		// sql = "select ti, ti.product from Items ti join ti.product p on
-		// ti.product.productId=20202 where ti.cart.cartId=(select tc.cartId
-		// from Cart tc where tc.customer.customerId=:cid)";
-
 		Order order = em.find(Order.class, orderId);
 		int cartId = order.getCart().getCartId();
 
@@ -309,22 +282,22 @@ public class CustomerRepoImpl implements CustomerRepository {
 		String sql = "select c from Cart c where c.customer.customerId=:custId and c.cartStatus=1";
 		TypedQuery<Cart> query = em.createQuery(sql, Cart.class);
 		query.setParameter("custId", customerId);
-	
-		Cart cart = query.getSingleResult(); 
+
+		Cart cart = query.getSingleResult();
 		int cartId = cart.getCartId();
-		
+
 		Items item = em.find(Items.class, itemId);
 		em.remove(item);
 		return 1;
 	}
-	
+
 	@Override
 	@Transactional
 	public int removeOrderOfCustomer(int orderId) {
 		Order order = em.find(Order.class, orderId);
 		em.remove(order);
 		return 1;
-		
+
 	}
-	
+
 }

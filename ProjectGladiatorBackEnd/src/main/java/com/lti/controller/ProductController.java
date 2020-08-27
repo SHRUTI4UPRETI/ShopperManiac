@@ -40,13 +40,7 @@ public class ProductController {
 
 	@Autowired
 	private ProductService productServ;
-
-	// customer.setName(customerDto.getName())
-	/*
-	 * productD.setProductName(p.getProductName());
-	 * productD.setProductBrandName(p.getProductBrandName());
-	 * productD.setProductCategory(p.getProductCategory()); productD.set
-	 */
+	
 	@GetMapping("/viewLatestArrivals")
 	public List<ProductDto> latestFiveProducts() {
 		List<Product> products = productServ.latestFiveProducts();
@@ -214,14 +208,13 @@ public class ProductController {
 		// String imageUploadLocation = "D:/My Study Material/LTI/Virtual
 		// Training/Project Gladiator/Online Shopping Web App/Front end
 		// Angular/JVSD-OnlineShopping-Angular/src/assets/"; //jai path
-		String imageUploadLocation = "D:/Docs/LTI/VT/Project Gladiator/JVSD-OnlineShopping-Angular/OnlineShopping/src/assets/"; // Vishal
+		//String imageUploadLocation = "D:/Docs/LTI/VT/Project Gladiator/JVSD-OnlineShopping-Angular/OnlineShopping/src/assets/"; // Vishal
 																																// Path
 		// String
 		// imageUploadLocation="D:/angular846/JVSD-OnlineShopping-Angular/OnlineShopping/src/assets/";
 		// //divyansh path
-		// String
-		// imageUploadLocation="E:/ProjectGladiator/JVSD-OnlineShopping-Angular/OnlineShopping/src/assets/"
-		// //Shruti path
+		 String imageUploadLocation="E:/ProjectGladiator/JVSD-OnlineShopping-Angular/OnlineShopping/src/assets/";
+		//Shruti path
 		String fileName = productImageUploadDto.getProductImage().getOriginalFilename();
 		String targetFile = imageUploadLocation + fileName;
 		try {
@@ -252,7 +245,6 @@ public class ProductController {
 
 	@PostMapping("/viewProductBySubCategory")
 	public List<SpecificProductDto> viewProductBySubCategory(@RequestBody ProductSubCategories subCategoryDto) {
-		// System.out.println(subCategoryDto.getProductSubCategories());
 		List<Product> products = productServ.viewProductBySubCategory(subCategoryDto.getProductSubCategories());
 
 		List<SpecificProductDto> Specificproducts = new ArrayList<>();

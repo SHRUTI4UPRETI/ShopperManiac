@@ -121,7 +121,6 @@ public class ProductRepoImpl implements ProductRepo {
 		qry.setParameter("sc", productSubCategory);
 		qry.setParameter("status", true);
 		List<Product> products = qry.getResultList();
-		// System.out.println(productSubCategory);
 		return products;
 	}
 
