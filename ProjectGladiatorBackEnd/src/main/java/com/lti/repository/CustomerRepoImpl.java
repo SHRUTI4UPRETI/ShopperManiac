@@ -322,4 +322,14 @@ public class CustomerRepoImpl implements CustomerRepository {
 		em.remove(item);
 		return 1;
 	}
+	
+	@Override
+	@Transactional
+	public int removeOrderOfCustomer(int orderId) {
+		Order order = em.find(Order.class, orderId);
+		em.remove(order);
+		return 1;
+		
+	}
+	
 }

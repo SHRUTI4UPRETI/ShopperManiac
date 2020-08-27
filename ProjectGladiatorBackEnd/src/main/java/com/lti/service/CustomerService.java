@@ -33,5 +33,7 @@ public interface CustomerService {
 
 	int isValidCustomerEmail(String customerEmail);
 
+	int removeOrderOfCustomer(int orderId);
+
 	
 }

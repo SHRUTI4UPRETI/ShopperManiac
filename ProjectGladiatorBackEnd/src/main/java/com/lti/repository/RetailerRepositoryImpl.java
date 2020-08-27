@@ -71,6 +71,7 @@ public class RetailerRepositoryImpl implements RetailerRepository {
 		
 		Product product = em.find(Product.class, productId);
 		product.setProductQuantity(productQuantity);
+		product.setProductApproved(false);
 		em.merge(product);
 		return 1;
 	}

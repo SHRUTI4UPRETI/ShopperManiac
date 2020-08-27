@@ -108,5 +108,10 @@ public class CustomerServiceImpl implements CustomerService {
 	public int removeItemFromCart(int customerId, int itemId) {
 		return customerRepo.removeItemFromCart(customerId, itemId);
 	}
+	
+	@Override
+	public int removeOrderOfCustomer(int orderId) {
+		return customerRepo.removeOrderOfCustomer(orderId);
+	}
 
 }

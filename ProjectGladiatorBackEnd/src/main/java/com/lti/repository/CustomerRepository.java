@@ -39,4 +39,6 @@ public interface CustomerRepository {
 
 	int isValidCustomerEmail(String customerEmail);
 
+	int removeOrderOfCustomer(int orderId);
+
 }

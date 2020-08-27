@@ -72,7 +72,7 @@ public class CustomerController {
 
 		} catch (CustomerServiceException e) {
 			status.setStatus(StatusType.FAILURE);
-			status.setMessage(e.getMessage());
+			status.setMessage("Invalid Email Address");
 		}
 
 		return status;
@@ -303,6 +303,21 @@ public class CustomerController {
 			status.setStatus(StatusType.FAILURE);
 		}
 
+		return status;
+	}
+	
+	@PostMapping("/cancelOrder")
+	public Status removeOrderOfCustomer(@RequestBody OrderDto orderDto) {
+		int i = customerServ.removeOrderOfCustomer(orderDto.getOrderId());
+		Status status = new Status();
+		if (i > 0) {
+			status.setMessage("Order cancelled");
+			status.setStatus(StatusType.SUCCESS);
+		} else {
+			status.setMessage("Error in removing order");
+			status.setStatus(StatusType.FAILURE);
+		}
+		
 		return status;
 	}
 
