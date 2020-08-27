@@ -72,7 +72,7 @@ public class CustomerController {
 
 		} catch (CustomerServiceException e) {
 			status.setStatus(StatusType.FAILURE);
-			status.setMessage("Invalid Email Address");
+			status.setMessage(e.getMessage());
 		}
 
 		return status;
