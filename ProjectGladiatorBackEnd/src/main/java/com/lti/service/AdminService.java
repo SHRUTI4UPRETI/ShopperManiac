@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.lti.model.Admin;
 import com.lti.model.Product;
+import com.lti.model.Retailer;
 
 public interface AdminService {
 
@@ -14,4 +15,6 @@ public interface AdminService {
 	int productApprove(int productId);
 
 	List<Product> approvedProducts();
+
+	List<Retailer> viewAllRetailers();
 }

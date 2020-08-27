@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.lti.model.Admin;
 import com.lti.model.Product;
+import com.lti.model.Retailer;
 import com.lti.repository.AdminRepo;
 
 @Service
@@ -59,4 +60,10 @@ public class AdminServiceImpl implements AdminService {
 		return adminRepo.productApprove(productId);
 
 	}
+	
+	@Override
+	public List<Retailer> viewAllRetailers(){
+		return adminRepo.viewAllRetailers();
+	}
+	
 }

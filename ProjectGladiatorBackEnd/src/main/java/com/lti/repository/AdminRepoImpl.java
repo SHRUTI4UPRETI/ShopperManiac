@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import com.lti.model.Admin;
 import com.lti.model.Product;
+import com.lti.model.Retailer;
 
 @Repository
 public class AdminRepoImpl implements AdminRepo {
@@ -67,5 +68,14 @@ public class AdminRepoImpl implements AdminRepo {
 		product.setProductApproved(true);
 		em.merge(product);
 		return 1;
+	}
+	
+	@Override
+	public List<Retailer> viewAllRetailers() {
+		String sql = "select retailer from Retailer retailer";
+		TypedQuery<Retailer> query = em.createQuery(sql, Retailer.class);
+		List<Retailer> retailers = query.getResultList();
+		return retailers;
+		
 	}
 }

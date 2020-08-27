@@ -15,11 +15,13 @@ import com.lti.dto.LoginDto;
 import com.lti.dto.LoginStatusAdmin;
 import com.lti.dto.ProductDto;
 import com.lti.dto.ProductIdDto;
+import com.lti.dto.RetailerDetailsDto;
 import com.lti.dto.Status;
 import com.lti.dto.Status.StatusType;
 import com.lti.dto.loginStatus;
 import com.lti.model.Admin;
 import com.lti.model.Product;
+import com.lti.model.Retailer;
 import com.lti.service.AdminService;
 
 @RestController
@@ -99,6 +101,26 @@ public class AdminController {
 		}
 		return adminDto;
 
+	}
+	
+	@GetMapping("/viewAllRetailers")
+	public List<RetailerDetailsDto> viewAllRetailer() {
+		
+		List<RetailerDetailsDto> rs = new ArrayList<>();
+		List<Retailer> retailers = adminServ.viewAllRetailers();
+		
+	for(Retailer r : retailers) {
+		
+		RetailerDetailsDto rdto = new RetailerDetailsDto();
+		rdto.setRetailerId(r.getRetailerId());
+		rdto.setRetailerEmail(r.getRetailerEmail());
+		rdto.setRetailerMobile(r.getRetailerMobile());
+		rdto.setRetailerName(r.getRetailerName());
+		
+		rs.add(rdto);
+		}
+	
+	return rs;
 	}
 
 }
