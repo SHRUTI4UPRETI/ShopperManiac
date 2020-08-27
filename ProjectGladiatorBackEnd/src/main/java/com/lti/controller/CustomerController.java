@@ -186,7 +186,7 @@ public class CustomerController {
 		order.setOrderDate(LocalDate.now());
 		String i = customerServ.placeOrderforCustomer(order, placeOrder.getCustomerId());
 		if (i != null) {
-			status.setMessage("Order Placed");
+			status.setMessage("Your Order have been placed. Please browse to your dashboard to view the order details");
 			status.setStatus(StatusType.SUCCESS);
 
 			SimpleMailMessage message = new SimpleMailMessage();

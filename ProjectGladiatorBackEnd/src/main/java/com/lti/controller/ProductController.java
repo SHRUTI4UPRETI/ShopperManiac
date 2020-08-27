@@ -103,6 +103,53 @@ public class ProductController {
 		return Specificproducts;
 	}
 
+	@PostMapping("/lowToHigh")
+	public List<SpecificProductDto> lowToHigh(@RequestBody ProductCategoryDto productCategory) {
+
+		List<Product> products = productServ.lowToHigh(productCategory.getProductCategory());
+
+		List<SpecificProductDto> Specificproducts = new ArrayList<>();
+		for (Product p : products) {
+			SpecificProductDto specificProduct = new SpecificProductDto();
+			specificProduct.setProductName(p.getProductName());
+			specificProduct.setProductBrandName(p.getProductBrandName());
+			specificProduct.setProductCategory(p.getProductCategory());
+			specificProduct.setProductPrice(p.getProductPrice());
+			specificProduct.setProductDescription(p.getProductDescription());
+			specificProduct.setProductImagePath(p.getProductImagePath());
+			specificProduct.setProductSubCategory(p.getProductSubCategory());
+			specificProduct.setProductId(p.getProductId());
+			Specificproducts.add(specificProduct);
+		}
+
+		return Specificproducts;
+	}
+
+	
+	@PostMapping("/highToLow")
+	public List<SpecificProductDto> highToLow(@RequestBody ProductCategoryDto productCategory) {
+
+		List<Product> products = productServ.highToLow(productCategory.getProductCategory());
+
+		List<SpecificProductDto> Specificproducts = new ArrayList<>();
+		for (Product p : products) {
+			SpecificProductDto specificProduct = new SpecificProductDto();
+			specificProduct.setProductName(p.getProductName());
+			specificProduct.setProductBrandName(p.getProductBrandName());
+			specificProduct.setProductCategory(p.getProductCategory());
+			specificProduct.setProductPrice(p.getProductPrice());
+			specificProduct.setProductDescription(p.getProductDescription());
+			specificProduct.setProductImagePath(p.getProductImagePath());
+			specificProduct.setProductSubCategory(p.getProductSubCategory());
+			specificProduct.setProductId(p.getProductId());
+			Specificproducts.add(specificProduct);
+		}
+
+		return Specificproducts;
+	}
+	
+	
+
 	@PostMapping("/viewProductSubCategory")
 	public List<ProductSubCategories> viewProductSubCategories(@RequestBody ProductCategoryDto productCategory) {
 
@@ -144,7 +191,6 @@ public class ProductController {
 		}
 		return productDto;
 	}
-	 
 
 	@PostMapping("/addProduct")
 	public ProductIdDto addProduct(@RequestBody ProductAddDto productAddDto) {
@@ -168,9 +214,10 @@ public class ProductController {
 		// String imageUploadLocation = "D:/My Study Material/LTI/Virtual
 		// Training/Project Gladiator/Online Shopping Web App/Front end
 		// Angular/JVSD-OnlineShopping-Angular/src/assets/"; //jai path
-		//String imageUploadLocation = "D:/Docs/LTI/VT/Project Gladiator/JVSD-OnlineShopping-Angular/OnlineShopping/src/assets/"; // Vishal
+		String imageUploadLocation = "D:/Docs/LTI/VT/Project Gladiator/JVSD-OnlineShopping-Angular/OnlineShopping/src/assets/"; // Vishal
 																																// Path
-		 String imageUploadLocation="D:/angular846/JVSD-OnlineShopping-Angular/OnlineShopping/src/assets/";
+		// String
+		// imageUploadLocation="D:/angular846/JVSD-OnlineShopping-Angular/OnlineShopping/src/assets/";
 		// //divyansh path
 		// String
 		// imageUploadLocation="E:/ProjectGladiator/JVSD-OnlineShopping-Angular/OnlineShopping/src/assets/"
@@ -193,7 +240,7 @@ public class ProductController {
 		if (i > 0) {
 
 			status.setStatus(StatusType.SUCCESS);
-			status.setMessage("Uploaded!");
+			status.setMessage("Product Added Successfully!");
 
 		} else {
 			status.setStatus(StatusType.FAILURE);
@@ -202,10 +249,10 @@ public class ProductController {
 		return status;
 
 	}
-	
+
 	@PostMapping("/viewProductBySubCategory")
 	public List<SpecificProductDto> viewProductBySubCategory(@RequestBody ProductSubCategories subCategoryDto) {
-		//System.out.println(subCategoryDto.getProductSubCategories());
+		// System.out.println(subCategoryDto.getProductSubCategories());
 		List<Product> products = productServ.viewProductBySubCategory(subCategoryDto.getProductSubCategories());
 
 		List<SpecificProductDto> Specificproducts = new ArrayList<>();

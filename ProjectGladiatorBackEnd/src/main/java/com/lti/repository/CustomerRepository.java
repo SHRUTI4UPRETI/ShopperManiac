@@ -23,8 +23,6 @@ public interface CustomerRepository {
 
 	public List<Items> displayProductByOrderId(int orderId);
 
-	public int changeItemQuantity(int itemQuantity, int productId, int customerId);
-
 	boolean isCustomerPresent(String customerEmail);
 
 	public int changeQuantityInCart(int customerId, int itemId, int itemQuantity);
