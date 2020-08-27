@@ -181,9 +181,7 @@ public class CustomerRepoImpl implements CustomerRepository {
 		Order od = em.merge(order);
 
 		int status = setCartStatusInactive(cartId);
-		if (status > 0)
-			System.out.println("Cart status set inactive");
-
+	
 		List<Cart> carts = new ArrayList<Cart>();
 
 		Cart cartNew = new Cart();
@@ -191,9 +189,6 @@ public class CustomerRepoImpl implements CustomerRepository {
 		cartNew.setCartStatus(true);
 		carts.add(cartNew);
 		int newCart = addCart(carts, cid);
-
-		if (newCart > 0)
-			System.out.println("New Active cart created");
 
 		return customer.getCustomerEmail();
 	}
