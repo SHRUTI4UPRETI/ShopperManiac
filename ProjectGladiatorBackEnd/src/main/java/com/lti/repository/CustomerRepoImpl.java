@@ -200,11 +200,6 @@ public class CustomerRepoImpl implements CustomerRepository {
 		return customer.getCustomerEmail();
 	}
 
-	@Override
-	public int changeItemQuantity(int itemQuantity, int productId, int customerId) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 
 	@Override
 	public Customer findCustomerbyCustomerId(int customerId) {
@@ -322,4 +317,6 @@ public class CustomerRepoImpl implements CustomerRepository {
 		em.remove(item);
 		return 1;
 	}
+
+
 }

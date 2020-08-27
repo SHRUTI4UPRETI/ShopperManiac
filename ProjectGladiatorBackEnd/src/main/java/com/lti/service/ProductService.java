@@ -26,4 +26,8 @@ public interface ProductService {
 	List<String> productSubCategoryByCategory(String productCategory);
 	
     List<Product> viewProductBySubCategory(String productSubCategory);
+    
+    public List<Product> lowToHigh(String productCategory);
+    
+    public List<Product> highToLow(String productCategory);
 }

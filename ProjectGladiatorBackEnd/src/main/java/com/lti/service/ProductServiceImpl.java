@@ -113,7 +113,7 @@ public class ProductServiceImpl implements ProductService {
 		}
 		return productSubCategories;
 	}
-	
+
 	@Override
 	public List<Product> viewProductBySubCategory(String productSubCategory) {
 
@@ -124,7 +124,34 @@ public class ProductServiceImpl implements ProductService {
 			imageName = "assets/" + imageName + ".jpg";
 			p.setProductImagePath(imageName);
 		}
-//System.out.println(productSubCategory);
+		//System.out.println(productSubCategory);
+		return products;
+	}
+
+	@Override
+	public List<Product> lowToHigh(String productCategory) {
+		
+		List<Product> products = new ArrayList<>();
+		products = productRepo.lowToHigh(productCategory);
+		for (Product p : products) {
+			String imageName = p.getProductImagePath();
+			imageName = "assets/" + imageName + ".jpg";
+			p.setProductImagePath(imageName);
+		}
+		//System.out.println(productSubCategory);
+		return products;
+	}
+
+	@Override
+	public List<Product> highToLow(String productCategory) {
+		List<Product> products = new ArrayList<>();
+		products = productRepo.highToLow(productCategory);
+		for (Product p : products) {
+			String imageName = p.getProductImagePath();
+			imageName = "assets/" + imageName + ".jpg";
+			p.setProductImagePath(imageName);
+		}
+		//System.out.println(productSubCategory);
 		return products;
 	}
 

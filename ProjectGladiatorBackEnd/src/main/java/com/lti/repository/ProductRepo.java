@@ -27,4 +27,9 @@ public interface ProductRepo {
 	
 	 List<Product> viewProductBySubCategory(String productSubCategory);
 
+	List<Product> lowToHigh(String productCategory);
+	
+	List<Product> highToLow(String productCategory);
+	
+
 }
