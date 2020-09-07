@@ -105,11 +105,9 @@ public class CustomerRepoImpl implements CustomerRepository {
 
 		Cart cart = carts.get(0);
 
-		// Cart cart = em.find(Cart.class, cartId);
 		Items item = items.get(0);
 
 		Product product = em.find(Product.class, productId);
-		// System.out.println(product.getProductId());
 
 		item.setItemName(product.getProductName());
 		item.setItemPrice(product.getProductPrice());
