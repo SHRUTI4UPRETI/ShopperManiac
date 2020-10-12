@@ -14,8 +14,6 @@ This is an Online Shopping Website. It will provide platform for several individ
 •	CSS
 •	Angular
 •	TypeScript
-## Database Schema
-![](images/database.jpg)
 **Following are some Feature which are in the website with Snapshot of them**
 ### Website :
 *	New Arrivals will be shown on the front page 
@@ -34,4 +32,7 @@ This is an Online Shopping Website. It will provide platform for several individ
 *	Dashboard / Logout / cart  button will be shown on the header once Customer is logged in 
 *	Add to cart (Only after login)
 
-![](images/database.jpg)
+![](images/HomePage.png)
+![](images/essentials.png)
+![](images/MenCategory.png)
+![](images/SpecificProduct.png)
