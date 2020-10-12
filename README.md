@@ -32,7 +32,11 @@ This is an Online Shopping Website. It will provide platform for several individ
 *	Dashboard / Logout / cart  button will be shown on the header once Customer is logged in 
 *	Add to cart (Only after login)
 
-![](images/HomePage.png) {:height="15%" width="15%"}
-![](images/essentials.png) {:height="15%" width="15%"}
-![](images/MenCategory.png){:height="15%" width="15%"}
-![](images/SpecificProduct.png) {:height="15%" width="15%"}
+![](images/HomePage.png)
+>When not logged in 
+![](images/CustomerHomePage.png)
+>When logged in 
+![](images/essentials.png)
+
+![](images/MenCategory.png)
+![](images/SpecificProduct.png)
