@@ -40,3 +40,16 @@ This is an Online Shopping Website. It will provide platform for several individ
 
 ![](images/MenCategory.png)
 ![](images/SpecificProduct.png)
+![](images/LogIn.png)
+![](images/LogIn.png)
+
+### Customer : 
+*	Add to cart (update quantity , calculate price )
+*	Place order( mail on ordering)
+*	Change Password 
+*	Register / Forget Password (register on ordering, Otp in case of forget password)
+*	View their orders / cancel them 
+*	Login/ Logout 
+![](images/CartPage.png)
+
+*Rest you can explore by running this roject on your system*
