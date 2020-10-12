@@ -41,7 +41,6 @@ This is an Online Shopping Website. It will provide platform for several individ
 ![](images/MenCategory.png)
 ![](images/SpecificProduct.png)
 ![](images/LogIn.png)
-![](images/LogIn.png)
 
 ### Customer : 
 *	Add to cart (update quantity , calculate price )
@@ -51,5 +50,17 @@ This is an Online Shopping Website. It will provide platform for several individ
 *	View their orders / cancel them 
 *	Login/ Logout 
 ![](images/CartPage.png)
+
+###	Retailers :
+*	Add Products fix their price 
+*	Update stock
+*	Change Password
+* View all the products that he have added
+
+###	Admin : 
+*	Admin can view all products and retailers
+*	Add retailer, verify legitimacy of updates done by a retailer
+*	Verify Products added by the retailer if legitimate than only approve, hence uploaded to the site for customers to buy.
+*	Add Retailers (Mail will be send to retailer with their id and password which they can change later on).
 
 *Rest you can explore by running this roject on your system*
